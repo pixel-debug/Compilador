@@ -32,13 +32,12 @@ public class Tag {
     NE  = 274, // <>
     SUM = (int)'+',		
 		MIN = (int)'-',
-    OR  = (int)'||',
+    OR  = 275, //"||",
 		MUL	= (int)'*',
 		DIV = (int)'/',
-    AND = (int)'&&',
+    AND = 276,//"&&",
     DOT = (int)'.',
     AC  = (int)'{',
-    FC  = (int)'}',
 
 		//Outros tokens
 		NUM     = 300,

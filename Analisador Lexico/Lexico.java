@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-public class Lexer {
+public class Lexico {
 	 public static int line = 1; //contador de linhas
 	 private char ch = ' '; //caractere lido do arquivo
 	 private FileReader file;
@@ -13,7 +13,7 @@ public class Lexer {
 	 }
 	
 	/* Método construtor */
-	 public Lexer(String fileName) throws FileNotFoundException{
+	 public Lexico(String fileName) throws FileNotFoundException{
 		 try{
 			 file = new FileReader (fileName);
 		 }
@@ -22,13 +22,21 @@ public class Lexer {
 			 throw e;
 		 }
 		 //Insere palavras reservadas na HashTable
-		 reserve(new Word ("if", Tag.IF));
-		 reserve(new Word ("program", Tag.PRG));
-		 reserve(new Word ("begin", Tag.BEG));
-		 reserve(new Word ("end", Tag.END));
-		 reserve(new Word ("type", Tag.TYPE));
+		 reserve(new Word ("start", Tag.START));
+		 reserve(new Word ("exit", Tag.EXIT));
 		 reserve(new Word ("int", Tag.INT));
-		 ...
+		 reserve(new Word ("string", Tag.STR));
+		 reserve(new Word ("float", Tag.FLOAT));
+		 reserve(new Word ("if", Tag.IF));
+		 reserve(new Word ("then", Tag.THEN));
+		 reserve(new Word ("end", Tag.END));
+		 reserve(new Word ("else", Tag.ELSE));
+		 reserve(new Word ("do", Tag.DO));
+		 reserve(new Word ("while", Tag.WHILE));
+		 reserve(new Word ("scan", Tag.SCAN));
+		 reserve(new Word ("print", Tag.PRINT));
+		 reserve(new Word ("not", Tag.NOT));
+		 
 	 }
 	
 	/*Lê o próximo caractere do arquivo*/
