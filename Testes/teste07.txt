@@ -1,0 +1,9 @@
+//Comentario de uma linha
+
+/* Comentario de 2 linhas
+asdasdasd
+*/
+
+/* Comentario
+nao fechado
+

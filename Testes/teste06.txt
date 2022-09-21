@@ -1,0 +1,27 @@
+//Comentario de uma linha
+/* Comentario de 2 linhas
+asdasdasd
+*/
+
+start
+
+    int a;
+    float b;
+    string c;
+
+    print({1!});
+    print({2});
+    print({3});
+    print({4});
+    print({5});
+    prin({6});
+    
+    scan(a);
+    scan(b);
+    scan(c);
+
+    if (a>b) then
+        c = b;
+    end;
+
+exit

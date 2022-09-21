@@ -18,6 +18,6 @@ public class Word extends Token{
   }
 
   public String getLexeme(){
-    return "";
+    return lexeme;
   }
 }
