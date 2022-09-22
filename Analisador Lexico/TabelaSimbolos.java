@@ -3,10 +3,10 @@ import java.util.*;
 
 public class TabelaSimbolos {
     private Hashtable table; //tabela de símbolos do ambiente
-    private TabelaDeSimbolos prev;
+    private TabelaSimbolos prev;
 
     public TabelaSimbolos () {
-        this.tabela = new Hashtable();
+        this.table = new Hashtable();
     }
 
     /*Este método insere uma entrada na TS do ambiente */
@@ -22,18 +22,18 @@ public class TabelaSimbolos {
     /*O Token é pesquisado do ambiente atual para os anteriores */
     public int get(Token w){
         int aux;
-        for (TabelaDeSimbolos s = this; s != null; s = s.prev) {
-            if (s.tabela.get(w) != null) {
-                aux = (int) s.tabela.get(w);
+        for (TabelaSimbolos s = this; s != null; s = s.prev) {
+            if (s.table.get(w) != null) {
+                aux = (int) s.table.get(w);
                 return aux;
             }
         }
         return 0;
     }
 
-    public  TabelaDeSimbolos getInstance() {
+    public  TabelaSimbolos getInstance() {
         if (prev == null) {
-            prev = new TabelaDeSimbolos();
+            prev = new TabelaSimbolos();
             return prev;
         }
         return prev;
@@ -41,7 +41,7 @@ public class TabelaSimbolos {
 
     public void imprimirTabela() {
         System.out.println("\nTabela de Símbolos:\n");
-        Set set = tabela.entrySet();
+        Set set = table.entrySet();
         Iterator it = set.iterator();
         while (it.hasNext()) {
         //HashMap<K, V>.Entry<Token,String> entry = (HashMap.Entry<Token, String) it.next();
