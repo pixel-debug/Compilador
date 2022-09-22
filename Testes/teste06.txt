@@ -1,27 +1,23 @@
-//Comentario de uma linha
-/* Comentario de 2 linhas
-asdasdasd
-*/
-
+//Comentario
 start
-
-    int a;
-    float b;
+	int a, b;
+	int result;
     string c;
 
-    print({1!});
-    print({2});
-    print({3});
-    print({4});
-    print({5});
-    prin({6});
-    
-    scan(a);
-    scan(b);
-    scan(c);
+    scan (a);
+    scan (b);
 
-    if (a>b) then
-        c = b;
+    print(a);
+    print(b);
+    
+    result = a / b;
+
+    if(result>1) then
+        c = "A é maior que B";
+    else
+        c = "B é maior que A";
     end;
+
+    print(c);
 
 exit
