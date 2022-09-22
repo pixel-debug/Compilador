@@ -4,7 +4,9 @@ start
 	int result;
     string c;
 
+    print(a:);
     scan (a);
+    print(b:);
     scan (b);
 
     print(a);
