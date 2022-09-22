@@ -3,11 +3,10 @@ import java.util.*;
 
 public class TabelaSimbolos {
     private Hashtable table; //tabela de símbolos do ambiente
-    protected TabelaSimbolos prev; //ambiente imediatamente superior
+    private TabelaDeSimbolos prev;
 
-    public TabelaSimbolos(TabelaSimbolos n){
-        table = new Hashtable(); //cria a TS para o ambiente
-        prev = n; //associa o ambiente atual ao anterior
+    public TabelaSimbolos () {
+        this.tabela = new Hashtable();
     }
 
     /*Este método insere uma entrada na TS do ambiente */
@@ -15,18 +14,39 @@ public class TabelaSimbolos {
     /*Id é uma classe que representa os dados a serem armazenados na TS para */
     /*identificadores */
 
-    public void put(Token w, Id i){
-        table.put(w,i);
+    public void put(Token w, int id){
+        table.put(w,id);
     }
 
     /*Este método retorna as informações (Id) referentes a determinado Token */
     /*O Token é pesquisado do ambiente atual para os anteriores */
-    public Id get(Token w){
-        for (TabelaSimbolos e = this; e!=null; e = e.prev){
-            Id found = (Id) e.table.get(w);
-            if (found != null) //se Token existir em uma das TS
-            return found;
+    public int get(Token w){
+        int aux;
+        for (TabelaDeSimbolos s = this; s != null; s = s.prev) {
+            if (s.tabela.get(w) != null) {
+                aux = (int) s.tabela.get(w);
+                return aux;
+            }
         }
-        return null; //caso Token não exista em uma das TS
+        return 0;
     }
+
+    public  TabelaDeSimbolos getInstance() {
+        if (prev == null) {
+            prev = new TabelaDeSimbolos();
+            return prev;
+        }
+        return prev;
+    }
+
+    public void imprimirTabela() {
+        System.out.println("\nTabela de Símbolos:\n");
+        Set set = tabela.entrySet();
+        Iterator it = set.iterator();
+        while (it.hasNext()) {
+        //HashMap<K, V>.Entry<Token,String> entry = (HashMap.Entry<Token, String) it.next();
+        }
+    }
+
+
 }
