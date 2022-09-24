@@ -66,7 +66,7 @@ public class Lexico {
       if (
         ch == ' ' || ch == '\t' || ch == '\r' || ch == '\b'
       ) continue; else if (ch == '\n') line++; // conta linhas
-      else if (ch == (char) Tag.EOF) {
+      else if (ch == 65535) {
         break;
       } else if (ch == '/') {
         if (readch('*')) {
@@ -78,15 +78,15 @@ public class Lexico {
     switch (ch) {
       // Operadores
       case '&':
-        if (readch('&')) return Word.and; else return new Token('&');
+        if (readch('&')) return Word.and; else return new Token(Tag.AND);
       case '|':
-        if (readch('|')) return Word.or; else return new Token('|');
+        if (readch('|')) return Word.or; else return new Token(Tag.OR);
       case '=':
-        if (readch('=')) return Word.eq; else return new Token('=');
+        if (readch('=')) return Word.eq; else return new Token(Tag.PPV);
       case '<':
-        if (readch('=')) return Word.le; else return new Token('<');
+        if (readch('=')) return Word.le; else return new Token(Tag.LT);
       case '>':
-        if (readch('=')) return Word.ge; else return new Token('>');
+        if (readch('=')) return Word.ge; else return new Token(Tag.GT);
       // DEVE - SE TRATAR A STRING (TAG.LIT)
 
     }
@@ -115,10 +115,10 @@ public class Lexico {
       words.put(s, w);
       return w;
     }
-
-    // Caracteres não especificados
+    /* // Caracteres não especificados
     Token t = new Token(ch);
     ch = ' ';
     return t;
+  */
   }
 }
