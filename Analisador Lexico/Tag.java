@@ -3,7 +3,7 @@ public enum Tag {
   START, 
   EXIT,
   INT, // integer
-  STR, // string
+  STRING, // string
   FLOAT, // float
   IF,
   THEN,

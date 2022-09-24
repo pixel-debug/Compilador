@@ -5,7 +5,7 @@
     pontuacaoMinima = 50;
     pontuacaoMaxima = 100;
 
-    /* Entrada de dados
+    /* Entrada de dados 
         Verifica aprovação de candidatos
     do
         print("Pontuacao Candidato: ");

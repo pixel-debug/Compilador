@@ -5,7 +5,7 @@ import javax.swing.JFileChooser;
 
 public class Compilador {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     boolean boo;
     try {
       JFileChooser chooser = new JFileChooser();
@@ -17,10 +17,11 @@ public class Compilador {
         Scanner input = new Scanner(chooser.getSelectedFile());
         boo = input.hasNextLine();
         while (boo) {
-          String token = lexer.scan().toString();
-          if (token.equals("65535")) boo = false;
-          System.out.println(token);
+          Token token = lexer.scan();
+          if (token.getToken().equals(Tag.EOF)) boo = false;
+          System.out.println(token.getToken());
         }
+        System.out.println(lexer.getLine());
         System.out.println(lexer.getWords());
       }
     } catch (FileNotFoundException e) {

@@ -8,7 +8,7 @@ public class Token {
     return "" + tag;
   }
 
-   public Tag getToken(int tag){
-    return Tag.values()[tag];
+   public Tag getToken(){
+    return this.tag;
   } 
 }
