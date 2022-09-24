@@ -1,6 +1,6 @@
 public enum Tag {
   // Palavras reservadas
-  START,
+  START, 
   EXIT,
   INT, // integer
   STR, // string
@@ -16,23 +16,27 @@ public enum Tag {
   NOT,
 
   // Operadores e pontuação
-  PV, //;
-  VRG,
-  PPV, // PPV IGN
-  AP,
-  FP,
-  FC,
-  EQ, // GT t)'>',
-  GE, // > LT t)'<',
-  LE, // < NE , // <>
-  SUM,
-  MIN,
-  OR, // "||",
-  MUL,
-  DIV,
-  AND, // "&&",
-  DOT,
-  AC,
+  PV,   // ;
+  VRG,  // ,
+  AP,   // (
+  FP,   // )
+  AC,   // {
+  FC,   // !
+  EQ,   // ==
+  GT,   // >
+  GE,   // >=
+  LT,   // <
+  LE,   // <= 
+  NE , // <>
+  SUM,  // +
+  MIN,  // -
+  MUL,  // *
+  DIV,  // /
+  OR,   // "||",
+  AND,  // "&&",
+  DOT,  // .
+  PPV,  // Assing
+  
 
   // Outros tokens
   NUM,

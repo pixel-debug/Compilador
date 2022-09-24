@@ -8,7 +8,7 @@ public class Word extends Token {
   public static final Word le = new Word("<=", Tag.LE);
   public static final Word ge = new Word(">=", Tag.GE);
 
-  public Word(String s, int tag) {
+  public Word(String s, Tag tag) {
     super(tag);
     lexeme = s;
   }

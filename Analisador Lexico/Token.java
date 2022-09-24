@@ -1,6 +1,6 @@
 public class Token {
-  public final int tag; //constante que representa o token
-  public Token (int t){
+  public final Tag tag; //constante que representa o token
+  public Token (Tag t){
     tag = t;
   }
 
@@ -8,7 +8,7 @@ public class Token {
     return "" + tag;
   }
 
-/*   public Tag getToken(int tag){
-    return 
-  } */
+   public Tag getToken(int tag){
+    return Tag.values()[tag];
+  } 
 }
