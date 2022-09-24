@@ -19,7 +19,7 @@ public class Compilador {
         while (boo) {
           Token token = lexer.scan();
           if (token.getToken().equals(Tag.EOF)) boo = false;
-          System.out.println(token.getToken());
+          System.out.println("<"+token+","+token.getToken()+">");
         }
         System.out.println(lexer.getLine());
         System.out.println(lexer.getWords());

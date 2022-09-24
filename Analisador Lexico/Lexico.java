@@ -152,6 +152,16 @@ public class Lexico {
         case ')':
           readch();
           return new Token(Tag.FP);
+        case '"':
+          StringBuilder sb = new StringBuilder();
+          while(true){
+            readch();
+            if(ch=='"') break;
+            else sb.append(ch);
+          }
+          String s = sb.toString();
+          readch();
+          return new Word(s, Tag.STRING);
           /*
            * case '.':
            * readch();
