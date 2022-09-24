@@ -57,7 +57,6 @@ public class Lexico {
     return true;
   }
 
-  // TRATAR A TABULAÇÃO
   // VERIFICAR OS COMENTARIOS
   public Token scan() throws IOException {
     boolean comentario = false;

@@ -1,48 +1,49 @@
-public class Tag {
+public enum Tag {
+  // Palavras reservadas
+  START,
+  EXIT,
+  INT, // integer
+  STR, // string
+  FLOAT, // float
+  IF,
+  THEN,
+  END,
+  ELSE,
+  DO,
+  WHILE,
+  SCAN,
+  PRINT,
+  NOT,
 
- public final static int
-    //Palavras reservadas
-    START   = 256,
-    EXIT    = 257,
-    INT     = 258, //integer
-    STR     = 259, //string
-    FLOAT   = 260, //float
-    IF      = 261,
-    THEN    = 262,
-		END     = 263,
-		ELSE    = 264,
-    DO 	    = 265,
-    WHILE   = 266,
-    SCAN    = 267,
-    PRINT   = 268,
-    NOT     = 269, 
-    
-    //Operadores e pontuação
-    PV 	= (int)';',
-		VRG = (int)',',
-    PPV = 270, //PPV = ASSIGN
-		AP 	= (int)'(',
-		FP	= (int)')',
-    FC  = (int)'!',
-    EQ  = 271, // ==
-    GT	= (int)'>',
-    GE  = 272, // >=
-    LT	= (int)'<',
-    LE  = 273, // <=
-    NE  = 274, // <>
-    SUM = (int)'+',		
-		MIN = (int)'-',
-    OR  = 275, //"||",
-		MUL	= (int)'*',
-		DIV = (int)'/',
-    AND = 276,//"&&",
-    DOT = (int)'.',
-    AC  = (int)'{',
+  // Operadores e pontuação
+  PV, //;
+  VRG,
+  PPV, // PPV IGN
+  AP,
+  FP,
+  FC,
+  EQ, // GT t)'>',
+  GE, // > LT t)'<',
+  LE, // < NE , // <>
+  SUM,
+  MIN,
+  OR, // "||",
+  MUL,
+  DIV,
+  AND, // "&&",
+  DOT,
+  AC,
 
-		//Outros tokens
-		NUM     = 300,
-		ID      = 301,
-		LIT     = 302,
-    VOID    = 303,
-		EOF     = 65535;
-  }
+  // Outros tokens
+  NUM,
+  ID,
+  LIT,
+  VOID,
+  EOF,
+
+  // Especiais
+  UNEXPECTED_EOF,
+  INVALID_TOKEN,
+  END_OF_FILE,
+
+}
