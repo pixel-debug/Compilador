@@ -2,7 +2,7 @@ public class Num extends Token{
   public final int value;
   
   public Num(int value){
-    super(Tag.NUM);
+    super(Tag.INT);
     this.value = value;
   }
   

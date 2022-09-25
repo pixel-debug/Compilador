@@ -1,4 +1,3 @@
-import AnalisadorLexico.Token;
 import java.util.*;
 
 public class TabelaDeSimbolos {

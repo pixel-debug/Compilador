@@ -10,7 +10,7 @@ public class Lexico {
   private Hashtable words = new Hashtable();
 
   /* Método para inserir palavras reservadas na HashTable */
-  private void reserve(Word w) {
+  private void reserve(Lexeme w) {
     words.put(w.getLexeme(), w); // lexema é a chave para entrada na
     // HashTable
   }
@@ -28,20 +28,20 @@ public class Lexico {
       throw e;
     }
     // Insere palavras reservadas na HashTable
-    reserve(new Word("start", Tag.START));
-    reserve(new Word("exit", Tag.EXIT));
-    reserve(new Word("int", Tag.INT));
-    reserve(new Word("string", Tag.STRING));
-    reserve(new Word("float", Tag.FLOAT));
-    reserve(new Word("if", Tag.IF));
-    reserve(new Word("then", Tag.THEN));
-    reserve(new Word("end", Tag.END));
-    reserve(new Word("else", Tag.ELSE));
-    reserve(new Word("do", Tag.DO));
-    reserve(new Word("while", Tag.WHILE));
-    reserve(new Word("scan", Tag.SCAN));
-    reserve(new Word("print", Tag.PRINT));
-    reserve(new Word("not", Tag.NOT));
+    reserve(new Lexeme("start", Tag.START));
+    reserve(new Lexeme("exit", Tag.EXIT));
+    reserve(new Lexeme("int", Tag.INT));
+    reserve(new Lexeme("string", Tag.STRING));
+    reserve(new Lexeme("float", Tag.FLOAT));
+    reserve(new Lexeme("if", Tag.IF));
+    reserve(new Lexeme("then", Tag.THEN));
+    reserve(new Lexeme("end", Tag.END));
+    reserve(new Lexeme("else", Tag.ELSE));
+    reserve(new Lexeme("do", Tag.DO));
+    reserve(new Lexeme("while", Tag.WHILE));
+    reserve(new Lexeme("scan", Tag.SCAN));
+    reserve(new Lexeme("print", Tag.PRINT));
+    reserve(new Lexeme("not", Tag.NOT));
   }
 
   /* Lê o próximo caractere do arquivo */
@@ -108,27 +108,27 @@ public class Lexico {
         // Operadores
         case '&':
           if (readch('&'))
-            return Word.and;
+            return Lexeme.and;
           else
             return new Token(Tag.AND);
         case '|':
           if (readch('|'))
-            return Word.or;
+            return Lexeme.or;
           else
             return new Token(Tag.OR);
         case '=':
           if (readch('='))
-            return Word.eq;
+            return Lexeme.eq;
           else
             return new Token(Tag.PPV);
         case '<':
           if (readch('='))
-            return Word.le;
+            return Lexeme.le;
           else
             return new Token(Tag.LT);
         case '>':
           if (readch('='))
-            return Word.ge;
+            return Lexeme.ge;
           else
             return new Token(Tag.GT);
         case ',':
@@ -161,7 +161,7 @@ public class Lexico {
           }
           String s = sb.toString();
           readch();
-          return new Word(s, Tag.STRING);
+          return new Lexeme(s, Tag.STRING);
           /*
            * case '.':
            * readch();
@@ -189,10 +189,10 @@ public class Lexico {
           readch();
         } while (Character.isLetterOrDigit(ch));
         String s = sb.toString();
-        Word w = (Word) words.get(s);
+        Lexeme w = (Lexeme) words.get(s);
         if (w != null)
           return w; // palavra já existe na HashTable
-        w = new Word(s, Tag.ID);
+        w = new Lexeme(s, Tag.ID);
         words.put(s, w);
         return w;
       }
