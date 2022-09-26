@@ -182,12 +182,12 @@ public class Lexico {
       }
 
       // Identificadores
-      if (Character.isLetter(ch)) {
+      if (Character.isLetter(ch) || ch == '_') {
         StringBuilder sb = new StringBuilder();
         do {
           sb.append(ch);
           readch();
-        } while (Character.isLetterOrDigit(ch));
+        } while (Character.isLetterOrDigit(ch) || ch == '_');
         String s = sb.toString();
         Lexeme w = (Lexeme) words.get(s);
         if (w != null)

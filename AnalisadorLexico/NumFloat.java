@@ -3,7 +3,7 @@ public class NumFloat extends Token {
 
     // Construtor
     public NumFloat(float value) {
-        super(Tag.FLOAT);
+        super(Tag.NUM);
         this.value = value;
     }
 
