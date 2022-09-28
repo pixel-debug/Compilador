@@ -52,8 +52,7 @@ public class Lexico {
   /* Lê o próximo caractere do arquivo e verifica se é igual a c */
   private boolean readch(char c) throws IOException {
     readch();
-    if (ch != c)
-      return false;
+    if (ch != c) return false;
     ch = ' ';
     return true;
   }
@@ -68,69 +67,53 @@ public class Lexico {
     int comentarioLine = 0;
     // Desconsidera delimitadores na entrada
     for (;; readch()) {
-      if (ch=='/'){
+      if (ch == '/') {
         readch();
-          if (ch == '*') {
-            while (true) {
+        if (ch == '*') {
+          while (true) {
+            readch();
+            if (ch == '\n') this.line++;
+            if (ch == '*') {
               readch();
-              if(ch=='\n') this.line++;
-              if (ch == '*') {
-                readch();
-                if (ch == '/') break;
-              }
-              if((int)ch==65535){
-                  throw new Exception("Um comentário não foi fechado");
-              }
+              if (ch == '/') break;
+            }
+            if ((int) ch == 65535) {
+              throw new Exception("Um comentário não foi fechado");
             }
           }
-          if (ch == '/') {
-            while (true) {
-              readch();
-              if (ch == '\n') {
-                break;
-              }
+        }
+        if (ch == '/') {
+          while (true) {
+            readch();
+            if (ch == '\n') {
+              break;
             }
-          } else {
-            return new Token(Tag.DIV);
-          }}
-      if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\b')
-        continue;
-      else if (ch == '\n')
-        this.line++; // conta linhas
+          }
+        } else {
+          return new Token(Tag.DIV);
+        }
+      }
+      if (
+        ch == ' ' || ch == '\t' || ch == '\r' || ch == '\b'
+      ) continue; else if (ch == '\n') this.line++; // conta linhas
       else if (ch == 65535) {
         return new Token(Tag.EOF);
-      } else
-        break;
+      } else break;
     }
 
     if (!comentario) {
       switch (ch) {
         // Operadores
         case '&':
-          if (readch('&'))
-            return Lexeme.and;
-          else
-            return new Token(Tag.AND);
+          if (readch('&')) return Lexeme.and; else return new Token(Tag.AND);
         case '|':
-          if (readch('|'))
-            return Lexeme.or;
-          else
-            return new Token(Tag.OR);
+          if (readch('|')) return Lexeme.or; else return new Token(Tag.OR);
         case '=':
-          if (readch('='))
-            return Lexeme.eq;
-          else
-            return new Token(Tag.PPV);
+          if (readch('=')) return Lexeme.eq; else return new Token(Tag.PPV);
         case '<':
-          if (readch('='))
-            return Lexeme.le;
-          else
-            return new Token(Tag.LT);
+          if (readch('=')) return Lexeme.le; else return new Token(Tag.LT);
         case '>':
-          if (readch('='))
-            return Lexeme.ge;
-          else
-            return new Token(Tag.GT);
+          if (readch('=')) return Lexeme.ge; else return new Token(Tag.GT);
         case ',':
           readch();
           return new Token(Tag.VRG);
@@ -154,20 +137,19 @@ public class Lexico {
           return new Token(Tag.FP);
         case '"':
           StringBuilder sb = new StringBuilder();
-          while(true){
+          while (true) {
             readch();
-            if(ch=='"') break;
-            else sb.append(ch);
+            if (ch == '"') break; else sb.append(ch);
           }
           String s = sb.toString();
           readch();
           return new Lexeme(s, Tag.STRING);
-          /*
-           * case '.':
-           * readch();
-           * return new Token(Tag.DOT);
-           */
-          // DEVE - SE TRATAR A STRING (TAG.LIT)
+        /*
+         * case '.':
+         * readch();
+         * return new Token(Tag.DOT);
+         */
+        // DEVE - SE TRATAR A STRING (TAG.LIT)
 
       }
 
@@ -178,7 +160,17 @@ public class Lexico {
           value = 10 * value + Character.digit(ch, 10);
           readch();
         } while (Character.isDigit(ch));
-        return new Num(value);
+        if (ch != '.') return new Num(value);
+
+        float aux = 10;
+        float float_value = 0;
+        while (true) {
+          readch();
+          if (!Character.isDigit(ch)) break;
+          float_value += (Character.digit(ch, 10) / 10.0);
+          aux = aux * 10;
+        }
+        return new NumFloat(float_value);
       }
 
       // Identificadores
@@ -190,8 +182,7 @@ public class Lexico {
         } while (Character.isLetterOrDigit(ch) || ch == '_');
         String s = sb.toString();
         Lexeme w = (Lexeme) words.get(s);
-        if (w != null)
-          return w; // palavra já existe na HashTable
+        if (w != null) return w; // palavra já existe na HashTable
         w = new Lexeme(s, Tag.ID);
         words.put(s, w);
         return w;
