@@ -43,5 +43,4 @@ public class TabelaDeSimbolos {
     }
     return symbols;
   }
-
 }
