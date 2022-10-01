@@ -226,7 +226,7 @@ public class Lexico {
     Token t = new Token(Tag.INVALID_TOKEN);
     ch = ' ';
     if(t.getToken()==Tag.INVALID_TOKEN){
-      System.out.println("Token invalido na linha "+line);
+      System.out.println("Analisador Lexico: Token invalido na linha "+line);
     }
     return t;
   }
