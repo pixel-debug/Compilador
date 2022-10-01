@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 import java.util.Hashtable;
-import TabelaDeSimbolos.TabelaDeSimbolos;
-import TabelaDeSimbolos.Id;
 
 public class Lexico {
 
@@ -227,6 +225,9 @@ public class Lexico {
     // Caracteres não especificados
     Token t = new Token(Tag.INVALID_TOKEN);
     ch = ' ';
+    if(t.getToken()==Tag.INVALID_TOKEN){
+      System.out.println("Token invalido na linha "+line);
+    }
     return t;
   }
 }
