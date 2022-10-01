@@ -23,9 +23,12 @@ public class Compilador {
           Token token = lexer.scan();
           if (token.getToken().equals(Tag.EOF))
             boo = false;
-          System.out.println("<" + token + "," + token.getToken() + ">");
+          if(token.getToken()!=Tag.INVALID_TOKEN)
+            System.out.println("<" + token + "," + token.getToken() + ">");
+          else
+            System.out.println("Analisador Lexico: Token invalido na linha "+lexer.getLine());
         }
-        System.out.println("Total de linhas"+lexer.getLine());
+        System.out.println("Total de linhas: "+lexer.getLine());
 
         System.out.println("\n\nTabela de símbolos:");
         System.out.println(symbols.toString());

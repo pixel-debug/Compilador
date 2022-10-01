@@ -165,6 +165,9 @@ public class Lexico {
               break;
             else
               sb.append(ch);
+            if ((int) ch == 65535) {
+              throw new Exception("Um string não foi fechado");
+            }
           }
           String s = sb.toString();
           readch();
@@ -225,9 +228,6 @@ public class Lexico {
     // Caracteres não especificados
     Token t = new Token(Tag.INVALID_TOKEN);
     ch = ' ';
-    if(t.getToken()==Tag.INVALID_TOKEN){
-      System.out.println("Analisador Lexico: Token invalido na linha "+line);
-    }
     return t;
   }
 }
