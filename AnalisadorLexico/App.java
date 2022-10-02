@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 
-public class Compilador {
+public class App {
 
   public static void main(String[] args) throws Exception {
     TabelaDeSimbolos symbols;
