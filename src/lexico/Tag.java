@@ -1,3 +1,4 @@
+package lexico;
 public enum Tag {
   // Palavras reservadas
   START, 

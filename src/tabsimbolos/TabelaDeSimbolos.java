@@ -1,4 +1,7 @@
+package tabsimbolos;
 import java.util.*;
+
+import lexico.*;
 
 public class TabelaDeSimbolos {
 

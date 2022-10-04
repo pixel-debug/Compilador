@@ -1,6 +1,9 @@
+package lexico;
 import java.io.*;
 import java.util.*;
 import java.util.Hashtable;
+
+import tabsimbolos.*;
 
 public class Lexico {
 

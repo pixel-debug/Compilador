@@ -1,3 +1,6 @@
+package lexico;
+
+
 public class NumFloat extends Token {
     public final float value;
 

@@ -1,3 +1,4 @@
+package lexico;
 public class Lexeme extends Token {
 
   private String lexeme = "";

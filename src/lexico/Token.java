@@ -1,3 +1,4 @@
+package lexico;
 public class Token {
   public final Tag tag; //constante que representa o token
   public Token (Tag t){

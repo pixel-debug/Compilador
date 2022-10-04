@@ -1,3 +1,4 @@
+package tabsimbolos;
 public class Id {
 
     private String lexeme;

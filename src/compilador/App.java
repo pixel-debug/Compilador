@@ -1,7 +1,13 @@
+package compilador;
+
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
+
+import lexico.*;
+import tabsimbolos.TabelaDeSimbolos;
 
 public class App {
 
