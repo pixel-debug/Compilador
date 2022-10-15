@@ -1,13 +1,13 @@
 package lexico;
+
 import java.io.*;
 import java.util.*;
 import java.util.Hashtable;
-
 import tabsimbolos.*;
 
 public class Lexico {
 
-  private int line = 1; // contador de linhas
+  public int line = 1; // contador de linhas
   private char ch = ' '; // caractere lido do arquivo
   private FileReader file;
   private Hashtable words = new Hashtable();
@@ -24,7 +24,8 @@ public class Lexico {
   }
 
   /* Método construtor */
-  public Lexico(String fileName, TabelaDeSimbolos symbols) throws FileNotFoundException {
+  public Lexico(String fileName, TabelaDeSimbolos symbols)
+    throws FileNotFoundException {
     try {
       file = new FileReader(fileName);
       this.symbols = symbols;
@@ -57,8 +58,7 @@ public class Lexico {
   /* Lê o próximo caractere do arquivo e verifica se é igual a c */
   private boolean readch(char c) throws IOException {
     readch();
-    if (ch != c)
-      return false;
+    if (ch != c) return false;
     ch = ' ';
     return true;
   }
@@ -78,12 +78,10 @@ public class Lexico {
         if (ch == '*') {
           while (true) {
             readch();
-            if (ch == '\n')
-              this.line++;
+            if (ch == '\n') this.line++;
             if (ch == '*') {
               readch();
-              if (ch == '/')
-                break;
+              if (ch == '/') break;
             }
             if ((int) ch == 65535) {
               throw new Exception("Um comentário não foi fechado");
@@ -101,44 +99,27 @@ public class Lexico {
           return new Token(Tag.DIV);
         }
       }
-      if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\b')
-        continue;
-      else if (ch == '\n')
-        this.line++; // conta linhas
+      if (
+        ch == ' ' || ch == '\t' || ch == '\r' || ch == '\b'
+      ) continue; else if (ch == '\n') this.line++; // conta linhas
       else if (ch == 65535) {
         return new Token(Tag.EOF);
-      } else
-        break;
+      } else break;
     }
 
     if (!comentario) {
       switch (ch) {
         // Operadores
         case '&':
-          if (readch('&'))
-            return Lexeme.and;
-          else
-            return new Token(Tag.AND);
+          if (readch('&')) return Lexeme.and; else return new Token(Tag.AND);
         case '|':
-          if (readch('|'))
-            return Lexeme.or;
-          else
-            return new Token(Tag.OR);
+          if (readch('|')) return Lexeme.or; else return new Token(Tag.OR);
         case '=':
-          if (readch('='))
-            return Lexeme.eq;
-          else
-            return new Token(Tag.PPV);
+          if (readch('=')) return Lexeme.eq; else return new Token(Tag.PPV);
         case '<':
-          if (readch('='))
-            return Lexeme.le;
-          else
-            return new Token(Tag.LT);
+          if (readch('=')) return Lexeme.le; else return new Token(Tag.LT);
         case '>':
-          if (readch('='))
-            return Lexeme.ge;
-          else
-            return new Token(Tag.GT);
+          if (readch('=')) return Lexeme.ge; else return new Token(Tag.GT);
         case ',':
           readch();
           return new Token(Tag.VRG);
@@ -164,10 +145,7 @@ public class Lexico {
           StringBuilder sb = new StringBuilder();
           while (true) {
             readch();
-            if (ch == '"')
-              break;
-            else
-              sb.append(ch);
+            if (ch == '"') break; else sb.append(ch);
             if ((int) ch == 65535) {
               throw new Exception("Um string não foi fechado");
             }
@@ -191,15 +169,13 @@ public class Lexico {
           value = 10 * value + Character.digit(ch, 10);
           readch();
         } while (Character.isDigit(ch));
-        if (ch != '.')
-          return new Num(value);
+        if (ch != '.') return new Num(value);
 
         float aux = 10;
         float float_value = 0;
         while (true) {
           readch();
-          if (!Character.isDigit(ch))
-            break;
+          if (!Character.isDigit(ch)) break;
           float_value += (Character.digit(ch, 10) / 10.0);
           aux = aux * 10;
         }
@@ -215,8 +191,7 @@ public class Lexico {
         } while (Character.isLetterOrDigit(ch) || ch == '_');
         String s = sb.toString();
         Lexeme w = (Lexeme) words.get(s);
-        if (w != null)
-          return w; // palavra já existe na HashTable
+        if (w != null) return w; // palavra já existe na HashTable
 
         w = new Lexeme(s, Tag.ID);
         words.put(s, w);
