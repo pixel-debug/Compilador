@@ -1,7 +1,8 @@
 package lexico;
+
 public enum Tag {
   // Palavras reservadas
-  START, 
+  START,
   EXIT,
   INT, // integer
   STRING, // string
@@ -17,27 +18,27 @@ public enum Tag {
   NOT,
 
   // Operadores e pontuação
-  PV,   // ;
-  VRG,  // ,
-  AP,   // (
-  FP,   // )
-  AC,   // {
-  FC,   // !
-  EQ,   // ==
-  GT,   // >
-  GE,   // >=
-  LT,   // <
-  LE,   // <= 
-  NE , // <>
-  SUM,  // +
-  MIN,  // -
-  MUL,  // *
-  DIV,  // /
-  OR,   // "||",
-  AND,  // "&&",
-  DOT,  // .
-  PPV,  // Assing
-  
+  PV, // ;
+  VRG, // ,
+  AP, // (
+  FP, // )
+  AC, // {
+  FC, // !
+  EQ, // ==
+  GT, // >
+  GE, // >=
+  LT, // <
+  LE, // <=
+  NE, // <>
+  SUM, // +
+  MIN, // -
+  MUL, // *
+  DIV, // /
+  OR, // "||",
+  AND, // "&&",
+  DOT, // .
+  PPV, // Assing
+  QL, //quebra de linha
 
   // Outros tokens
   NUM,
@@ -50,5 +51,4 @@ public enum Tag {
   UNEXPECTED_EOF,
   INVALID_TOKEN,
   END_OF_FILE,
-
 }
