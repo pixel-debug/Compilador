@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import lexico.*;
 import sintatico.error;
 
-public class parser {
+public class Parser {
 
   private Token token;
   private Lexico lexico;
   private Tag tag;
   private error erro;
 
-  public parser(ArrayList<Token> tokenList) {
+  public Parser(Lexico lexico) {
     this.lexico = lexico;
+    advance();
   }
 
   private void advance() throws Exception {

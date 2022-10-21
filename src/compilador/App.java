@@ -1,18 +1,18 @@
 package compilador;
 
-
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
-
 import lexico.*;
+import sintatico.Parser;
 import tabsimbolos.TabelaDeSimbolos;
 
 public class App {
 
   public static void main(String[] args) throws Exception {
     TabelaDeSimbolos symbols;
+    Lexico lexer;
+    Parser parser;
     boolean boo;
     try {
       JFileChooser chooser = new JFileChooser();
@@ -20,21 +20,23 @@ public class App {
 
       if (retorno == JFileChooser.APPROVE_OPTION) {
         symbols = new TabelaDeSimbolos();
-        Lexico lexer = new Lexico(chooser.getSelectedFile().toString(),symbols);
+        lexer = new Lexico(chooser.getSelectedFile().toString(), symbols);
+        parser = new Parser(lexer);
+        parser.program();
 
         // for para percorrer o arquivo
         Scanner input = new Scanner(chooser.getSelectedFile());
         boo = input.hasNextLine();
         while (boo) {
           Token token = lexer.scan();
-          if (token.getToken().equals(Tag.EOF))
-            boo = false;
-          if(token.getToken()!=Tag.INVALID_TOKEN)
-            System.out.println("<" + token + "," + token.getToken() + ">");
-          else
-            System.out.println("Analisador Lexico: Token invalido na linha "+lexer.getLine());
+          if (token.getToken().equals(Tag.EOF)) boo = false;
+          if (token.getToken() != Tag.INVALID_TOKEN) System.out.println(
+            "<" + token + "," + token.getToken() + ">"
+          ); else System.out.println(
+            "Analisador Lexico: Token invalido na linha " + lexer.getLine()
+          );
         }
-        System.out.println("Total de linhas: "+lexer.getLine());
+        System.out.println("Total de linhas: " + lexer.getLine());
 
         System.out.println("\n\nTabela de símbolos:");
         System.out.println(symbols.toString());
