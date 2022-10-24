@@ -141,11 +141,11 @@ public class Lexico {
         case ')':
           readch();
           return new Token(Tag.FP);
-        case '"':
+        case '{':
           StringBuilder sb = new StringBuilder();
           while (true) {
             readch();
-            if (ch == '"') break; else sb.append(ch);
+            if (ch == '}') break; else sb.append(ch);
             if ((int) ch == 65535) {
               throw new Exception("Um string não foi fechado");
             }

@@ -12,7 +12,7 @@ public class Parser {
   private Tag tag;
   private error erro;
 
-  public Parser(Lexico lexico) {
+  public Parser(Lexico lexico) throws Exception {
     this.lexico = lexico;
     advance();
   }
@@ -343,7 +343,7 @@ public class Parser {
     }
   }
 
-}
+
 
   // fator-a ::= factor | "!" factor | "-" factor
   public void factorA() throws Exception {
