@@ -63,7 +63,7 @@ public class Parser {
     System.out.println("Analisando DECL");
     while (verifydecl(token)) {
       decl();
-      eat(tag.PV);
+      eat(Tag.PV);
     }
   }
 
@@ -94,8 +94,8 @@ public class Parser {
     switch (token.tag) {
       case ID:
         identifier();
-        while (token.tag == tag.VRG) {
-          eat(tag.VRG);
+        while (token.tag == Tag.VRG) {
+          eat(Tag.VRG);
           identifier();
         }
         break;
@@ -109,13 +109,13 @@ public class Parser {
   public void type() throws Exception {
     switch (token.tag) {
       case INT:
-        eat(tag.INT);
+        eat(Tag.INT);
         break;
       case FLOAT:
-        eat(tag.FLOAT);
+        eat(Tag.FLOAT);
         break;
       case STRING:
-        eat(tag.STRING);
+        eat(Tag.STRING);
         break;
       default:
         error(token);
@@ -129,7 +129,7 @@ public class Parser {
     System.out.println("Analisando STMT");
     while (verifystmt()) {
       stmt();
-      eat(tag.PV);
+      eat(Tag.PV);
     }
   }
 
@@ -174,7 +174,7 @@ public class Parser {
     switch (token.tag) {
       case ID:
         identifier();
-        eat(tag.PPV);
+        eat(Tag.PPV);
         simpleExpr();
         break;
       default:
@@ -188,18 +188,18 @@ public class Parser {
   public void ifStmt() throws Exception {
     switch (token.tag) {
       case IF:
-        eat(tag.IF);
+        eat(Tag.IF);
         condition();
-        eat(tag.THEN);
+        eat(Tag.THEN);
         stmtList();
         switch (token.tag) {
           case END:
-            eat(tag.END);
+            eat(Tag.END);
             break;
           case ELSE:
-            eat(tag.ELSE);
+            eat(Tag.ELSE);
             stmtList();
-            eat(tag.END);
+            eat(Tag.END);
             break;
           default:
             break;
@@ -219,7 +219,7 @@ public class Parser {
   public void whileStmt() throws Exception {
     switch (token.tag) {
       case DO:
-        eat(tag.DO);
+        eat(Tag.DO);
         stmtList();
         stmtSufix();
         break;
@@ -233,9 +233,9 @@ public class Parser {
   public void stmtSufix() throws Exception {
     switch (token.tag) {
       case WHILE:
-        eat(tag.WHILE);
+        eat(Tag.WHILE);
         condition();
-        eat(tag.END);
+        eat(Tag.END);
         break;
       default:
         error(token);
@@ -247,10 +247,10 @@ public class Parser {
   public void readStmt() throws Exception {
     switch (token.tag) {
       case SCAN:
-        eat(tag.SCAN);
-        eat(tag.AP);
+        eat(Tag.SCAN);
+        eat(Tag.AP);
         identifier();
-        eat(tag.FP);
+        eat(Tag.FP);
         break;
       default:
         error(token);
@@ -262,10 +262,10 @@ public class Parser {
   public void writeStmt() throws Exception {
     switch (token.tag) {
       case PRINT:
-        eat(tag.PRINT);
-        eat(tag.AP);
+        eat(Tag.PRINT);
+        eat(Tag.AP);
         writable();
-        eat(tag.FP);
+        eat(Tag.FP);
         break;
       default:
         error(token);
@@ -300,12 +300,12 @@ public class Parser {
       case FC:
       case MIN:
         simpleExpr();
-        if (token.tag == tag.EQ ||
-            token.tag == tag.GT ||
+        if (token.tag == Tag.EQ ||
+            token.tag == Tag.GT ||
             token.tag == Tag.GE ||
             token.tag == Tag.LT ||
             token.tag == Tag.LE ||
-            token.tag == tag.NE) {
+            token.tag == Tag.NE) {
           relop();
           simpleExpr();
         }
@@ -326,8 +326,8 @@ public class Parser {
       case FC:
       case MIN:
         term();
-        if (token.tag == tag.SUM ||
-            token.tag == tag.MIN ||
+        if (token.tag == Tag.SUM ||
+            token.tag == Tag.MIN ||
             token.tag == Tag.OR) {
           addop();
           term();
@@ -349,8 +349,8 @@ public class Parser {
       case FC:
       case MIN:
         factorA();
-        if (token.tag == tag.MUL ||
-            token.tag == tag.DIV ||
+        if (token.tag == Tag.MUL ||
+            token.tag == Tag.DIV ||
             token.tag == Tag.AND) {
           mulop();
           factorA();
@@ -368,15 +368,15 @@ public class Parser {
   public void factorA() throws Exception {
     switch (token.tag) {
       case AP:
-        eat(tag.AP);
+        eat(Tag.AP);
         factor();
         break;
       case FC:
-        eat(tag.FC);
+        eat(Tag.FC);
         factor();
         break;
       case MIN:
-        eat(tag.MIN);
+        eat(Tag.MIN);
         factor();
         break;
       case ID:
@@ -399,9 +399,9 @@ public class Parser {
         constant();
         break;
       case AP:
-        eat(tag.AP);
+        eat(Tag.AP);
         expression();
-        eat(tag.FP);
+        eat(Tag.FP);
         break;
       default:
         error(token);
@@ -413,22 +413,22 @@ public class Parser {
   public void relop() throws Exception {
     switch (token.tag) {
       case EQ:
-        eat(tag.EQ);
+        eat(Tag.EQ);
         break;
       case GT:
-        eat(tag.GT);
+        eat(Tag.GT);
         break;
       case GE:
-        eat(tag.GE);
+        eat(Tag.GE);
         break;
       case LT:
-        eat(tag.LT);
+        eat(Tag.LT);
         break;
       case LE:
-        eat(tag.LE);
+        eat(Tag.LE);
         break;
       case NE:
-        eat(tag.NE);
+        eat(Tag.NE);
         break;
       default:
         error(token);
@@ -441,13 +441,13 @@ public class Parser {
   public void addop() throws Exception {
     switch (token.tag) {
       case SUM:
-        eat(tag.SUM);
+        eat(Tag.SUM);
         break;
       case MIN:
-        eat(tag.MIN);
+        eat(Tag.MIN);
         break;
       case OR:
-        eat(tag.OR);
+        eat(Tag.OR);
         break;
       default:
         error(token);
@@ -459,13 +459,13 @@ public class Parser {
   public void mulop() throws Exception {
     switch (token.tag) {
       case MUL:
-        eat(tag.MUL);
+        eat(Tag.MUL);
         break;
       case DIV:
-        eat(tag.DIV);
+        eat(Tag.DIV);
         break;
       case AND:
-        eat(tag.AND);
+        eat(Tag.AND);
         break;
       default:
         error(token);
@@ -492,7 +492,7 @@ public class Parser {
   public void num_const() throws Exception {
     switch (token.tag) {
       case NUM:
-        eat(tag.NUM);
+        eat(Tag.NUM);
         break;
       default:
         error(token);
@@ -504,7 +504,7 @@ public class Parser {
   public void floatConst() throws Exception {
     switch (token.tag) {
       case NUM:
-        eat(tag.NUM);
+        eat(Tag.NUM);
         break;
       default:
         error(token);
@@ -516,9 +516,9 @@ public class Parser {
   public void literal() throws Exception {
     switch (token.tag) {
       case AC:
-        eat(tag.AC);
+        eat(Tag.AC);
         letter();
-        eat(tag.FC);
+        eat(Tag.FC);
         break;
       default:
         error(token);
@@ -531,7 +531,7 @@ public class Parser {
       switch (token.tag) {
         case ID:
           // VERIFICAR TABELA SIMBOLOS
-          eat(tag.ID);
+          eat(Tag.ID);
           break;
         default:
           error(token);
@@ -542,7 +542,7 @@ public class Parser {
   public void letter() throws Exception {
       switch (token.tag) {
         case STRING:
-          eat(tag.STRING);
+          eat(Tag.STRING);
           break;
         default:
           error(token);
@@ -553,10 +553,10 @@ public class Parser {
   public void digit() throws Exception {
     switch (token.tag) {
       case INT:
-        eat(tag.INT);
+        eat(Tag.INT);
         break;
       case FLOAT:
-        eat(tag.FLOAT);
+        eat(Tag.FLOAT);
         break;
       default:
         error(token);
