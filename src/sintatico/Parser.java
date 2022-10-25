@@ -284,6 +284,9 @@ public class Parser {
       case MIN:
         simpleExpr();
         break;
+      case STRING:
+        literal();
+        break;
       default:
         error(token);
         break;
@@ -368,7 +371,6 @@ public class Parser {
   public void factorA() throws Exception {
     switch (token.tag) {
       case AP:
-        eat(Tag.AP);
         factor();
         break;
       case FC:
@@ -479,7 +481,7 @@ public class Parser {
       case NUM:
         num_const();
         break;
-      case LIT:
+      case STRING:
         literal();
         break;
       default:
@@ -500,25 +502,12 @@ public class Parser {
     }
   }
 
-/*   // float_const ::= digit+ “.”digit+
-  public void floatConst() throws Exception {
-    switch (token.tag) {
-      case NUM:
-        eat(Tag.NUM);
-        break;
-      default:
-        error(token);
-        break;
-    }
-  } */
 
   // literal ::= " { " {caractere} " } "
   public void literal() throws Exception {
     switch (token.tag) {
-      case AC:
-        eat(Tag.AC);
+      case STRING:
         letter();
-        eat(Tag.FC);
         break;
       default:
         error(token);
