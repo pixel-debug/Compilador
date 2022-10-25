@@ -3,12 +3,11 @@ package sintatico;
 import lexico.Lexico;
 import lexico.Token;
 
-public class error {
+public class SintaxError {
 
-  private Token token;
   private Lexico lexico;
 
-  public void error() {
+  public void error(Token token) {
     System.out.println(
       "Erro  na linha " +
       lexico.line +
