@@ -30,11 +30,10 @@ public class App {
         while (boo) {
           Token token = lexer.scan();
           if (token.getToken().equals(Tag.EOF)) boo = false;
-          if (token.getToken() != Tag.INVALID_TOKEN) System.out.println(
-            "<" + token + "," + token.getToken() + ">"
-          ); else System.out.println(
-            "Analisador Lexico: Token invalido na linha " + lexer.getLine()
-          );
+          //if (token.getToken() != Tag.INVALID_TOKEN) System.out.println( "<" + token + "," + token.getToken() + ">");
+          //else System.out.println(
+          //"Analisador Lexico: Token invalido na linha " + lexer.getLine()
+          //);
         }
         System.out.println("Total de linhas: " + lexer.getLine());
 

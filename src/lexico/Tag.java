@@ -37,7 +37,7 @@ public enum Tag {
   OR, // "||",
   AND, // "&&",
   DOT, // .
-  PPV, // Assing
+  PPV, // Assing =
   QL, //quebra de linha
 
   // Outros tokens
