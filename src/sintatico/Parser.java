@@ -327,7 +327,7 @@ public class Parser {
     }
   }
 
-  // simple-expr ::= term | simple-expr addop term
+  // simple-expr ::= term | simple-expr {addop} term
   public void simpleExpr() throws Exception {
     switch (token.tag) {
       case ID:
@@ -337,12 +337,13 @@ public class Parser {
       case FC:
       case MIN:
         term();
-        if (
+        while (
           token.tag == Tag.SUM || token.tag == Tag.MIN || token.tag == Tag.OR
         ) {
           addop();
           term();
         }
+
         break;
       default:
         error(token, "simple-expr ou term");
@@ -350,7 +351,7 @@ public class Parser {
     }
   }
 
-  // term ::= factor-a | term mulop factor-a
+  // term ::= factor-a | term {mulop} factor-a
   public void term() throws Exception {
     switch (token.tag) {
       case ID:
