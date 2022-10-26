@@ -33,7 +33,7 @@ public class Parser {
 
   public void error(Token token, String erro) throws Exception {
     System.out.println(
-      "Erro  na linha " +
+      "\033[1;31mErro  na linha\033[0m " +
       lexico.line +
       " Recebi: " +
       token +
