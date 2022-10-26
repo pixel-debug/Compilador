@@ -4,22 +4,22 @@ start
 	int result;
     string c;
 
-    print(a:);
+    print({a:});
     scan (a);
-    print(b:);
+    print({b:});
     scan (b);
 
-    print(a);
-    print(b);
+    print({a});
+    print({b});
     
     result = a / b;
 
     if(result>1) then
-        c = "A é maior que B";
+        c = {A é maior que B};
     else
-        c = "B é maior que A";
-    end;
+        c = {B é maior que A};
+    end
 
-    print(c);
+    print({c});
 
 exit

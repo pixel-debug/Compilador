@@ -143,7 +143,10 @@ public class Parser {
       token.tag == Tag.WHILE ||
       token.tag == Tag.IF ||
       token.tag == Tag.ELSE
-    ) return true;
+    ) {
+      System.out.println("estou preso aqui " + token.tag);
+      return true;
+    }
     return false;
   }
 
@@ -201,7 +204,6 @@ public class Parser {
             break;
           case ELSE:
             eat(Tag.ELSE);
-            System.out.println("aaaaaaaaa" + token.tag);
             stmtList();
             eat(Tag.END);
             break;
