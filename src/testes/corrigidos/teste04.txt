@@ -20,5 +20,5 @@ start
     end
     print ({Apos a troca: });
     print ({a});
-    print ({b})
+    print ({b});
 exit

@@ -65,7 +65,6 @@ public class Parser {
     System.out.println("Analisando DECL");
     while (verifydecl(token)) {
       decl();
-      eat(Tag.PV);
     }
   }
 
@@ -84,6 +83,8 @@ public class Parser {
       case STRING:
         type();
         identList();
+
+        eat(Tag.PV);
         break;
       default:
         error(token, "terminal type");
@@ -130,7 +131,6 @@ public class Parser {
     System.out.println("Analisando STMT");
     while (verifystmt()) {
       stmt();
-      eat(Tag.PV);
     }
   }
 
@@ -140,7 +140,6 @@ public class Parser {
       token.tag == Tag.PRINT ||
       token.tag == Tag.SCAN ||
       token.tag == Tag.DO ||
-      token.tag == Tag.WHILE ||
       token.tag == Tag.IF
     ) {
       System.out.println("estou preso aqui " + token.tag);
@@ -155,6 +154,7 @@ public class Parser {
     switch (token.tag) {
       case ID:
         assignStmt();
+        eat(Tag.PV);
         break;
       case IF:
         ifStmt();
@@ -164,9 +164,11 @@ public class Parser {
         break;
       case SCAN:
         readStmt();
+        eat(Tag.PV);
         break;
       case PRINT:
         writeStmt();
+        eat(Tag.PV);
         break;
       default:
         error(token, "stmt");
@@ -204,12 +206,13 @@ public class Parser {
           case ELSE:
             eat(Tag.ELSE);
             stmtList();
+            eat(Tag.END);
             break;
           default:
             error(token, "csavf");
             break;
         }
-        eat(Tag.END);
+
         break;
       default:
         error(token, "ifopm");
