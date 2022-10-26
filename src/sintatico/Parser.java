@@ -141,8 +141,7 @@ public class Parser {
       token.tag == Tag.SCAN ||
       token.tag == Tag.DO ||
       token.tag == Tag.WHILE ||
-      token.tag == Tag.IF ||
-      token.tag == Tag.ELSE
+      token.tag == Tag.IF
     ) {
       System.out.println("estou preso aqui " + token.tag);
       return true;
@@ -205,13 +204,15 @@ public class Parser {
           case ELSE:
             eat(Tag.ELSE);
             stmtList();
-            eat(Tag.END);
             break;
           default:
+            error(token, "csavf");
             break;
         }
+        eat(Tag.END);
+        break;
       default:
-        error(token, "if");
+        error(token, "ifopm");
         break;
     }
   }
