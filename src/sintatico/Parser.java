@@ -337,6 +337,7 @@ public class Parser {
   public void simpleExpr() throws Exception {
     switch (token.tag) {
       case ID:
+      case STRING:
       case NUM:
       case AC:
       case AP:
@@ -361,6 +362,7 @@ public class Parser {
   public void term() throws Exception {
     switch (token.tag) {
       case ID:
+      case STRING:
       case NUM:
       case AC:
       case AP:
@@ -396,6 +398,7 @@ public class Parser {
         break;
       case ID:
       case NUM:
+      case STRING:
         factor();
         break;
       default:
@@ -411,6 +414,7 @@ public class Parser {
         identifier();
         break;
       case NUM:
+      case STRING:
         constant();
         break;
       case AP:
@@ -516,6 +520,7 @@ public class Parser {
 
   // literal ::= " { " {caractere} " } "
   public void literal() throws Exception {
+    System.out.println("cheguei aqui");
     switch (token.tag) {
       case STRING:
         letter();
