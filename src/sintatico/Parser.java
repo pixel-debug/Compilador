@@ -54,7 +54,7 @@ public class Parser {
         eat(Tag.EXIT);
         break;
       default:
-        error(token, "terminal START");
+        error(token, "");
         break;
     }
   }
@@ -62,7 +62,6 @@ public class Parser {
   // decl-list ::= decl {decl}
   // ::= decl {";" decl}
   public void declList() throws Exception {
-    System.out.println("Analisando DECL");
     while (verifydecl(token)) {
       decl();
     }
@@ -87,7 +86,7 @@ public class Parser {
         eat(Tag.PV);
         break;
       default:
-        error(token, "terminal type");
+        error(token, "");
         break;
     }
   }
@@ -103,7 +102,7 @@ public class Parser {
         }
         break;
       default:
-        error(token, "id");
+        error(token, "");
         break;
     }
   }
@@ -121,14 +120,13 @@ public class Parser {
         eat(Tag.STRING);
         break;
       default:
-        error(token, "type");
+        error(token, "");
         break;
     }
   }
 
   // stmt-list ::= stmt {stmt}
   public void stmtList() throws Exception {
-    System.out.println("Analisando STMT");
     while (verifystmt()) {
       stmt();
     }
@@ -142,7 +140,6 @@ public class Parser {
       token.tag == Tag.DO ||
       token.tag == Tag.IF
     ) {
-      System.out.println("estou preso aqui " + token.tag);
       return true;
     }
     return false;
@@ -171,7 +168,7 @@ public class Parser {
         eat(Tag.PV);
         break;
       default:
-        error(token, "stmt");
+        error(token, "");
         break;
     }
   }
@@ -185,7 +182,7 @@ public class Parser {
         simpleExpr();
         break;
       default:
-        error(token, "id");
+        error(token, "");
         break;
     }
   }
@@ -209,13 +206,13 @@ public class Parser {
             eat(Tag.END);
             break;
           default:
-            error(token, "csavf");
+            error(token, "");
             break;
         }
 
         break;
       default:
-        error(token, "ifopm");
+        error(token, "");
         break;
     }
   }
@@ -227,7 +224,6 @@ public class Parser {
 
   // while-stmt ::= do stmt-list stmt-sufix
   public void whileStmt() throws Exception {
-    System.out.println("Analisando while");
     switch (token.tag) {
       case DO:
         eat(Tag.DO);
@@ -235,7 +231,7 @@ public class Parser {
         stmtSufix();
         break;
       default:
-        error(token, "do");
+        error(token, "");
         break;
     }
   }
@@ -249,7 +245,7 @@ public class Parser {
         eat(Tag.END);
         break;
       default:
-        error(token, "while");
+        error(token, "");
         break;
     }
   }
@@ -264,14 +260,13 @@ public class Parser {
         eat(Tag.FP);
         break;
       default:
-        error(token, "scan");
+        error(token, "");
         break;
     }
   }
 
   // write-stmt ::= print "(" writable ")"
   public void writeStmt() throws Exception {
-    System.out.println("Analisando print");
     switch (token.tag) {
       case PRINT:
         eat(Tag.PRINT);
@@ -280,7 +275,7 @@ public class Parser {
         eat(Tag.FP);
         break;
       default:
-        error(token, "print");
+        error(token, "");
         break;
     }
   }
@@ -300,7 +295,7 @@ public class Parser {
         literal();
         break;
       default:
-        error(token, "simple expr ou literal");
+        error(token, "");
         break;
     }
   }
@@ -328,7 +323,7 @@ public class Parser {
         }
         break;
       default:
-        error(token, "simple-expr");
+        error(token, "");
         break;
     }
   }
@@ -353,7 +348,7 @@ public class Parser {
 
         break;
       default:
-        error(token, "simple-expr ou term");
+        error(token, "");
         break;
     }
   }
@@ -377,7 +372,7 @@ public class Parser {
         }
         break;
       default:
-        error(token, "factor-a");
+        error(token, "");
         break;
     }
   }
@@ -402,7 +397,7 @@ public class Parser {
         factor();
         break;
       default:
-        error(token, "facotr");
+        error(token, "");
         break;
     }
   }
@@ -423,7 +418,7 @@ public class Parser {
         eat(Tag.FP);
         break;
       default:
-        error(token, "id num ap");
+        error(token, "");
         break;
     }
   }
@@ -450,7 +445,7 @@ public class Parser {
         eat(Tag.NE);
         break;
       default:
-        error(token, ">");
+        error(token, "");
         break;
     }
   }
@@ -468,7 +463,7 @@ public class Parser {
         eat(Tag.OR);
         break;
       default:
-        error(token, "+");
+        error(token, "");
         break;
     }
   }
@@ -486,7 +481,7 @@ public class Parser {
         eat(Tag.AND);
         break;
       default:
-        error(token, "*");
+        error(token, "");
         break;
     }
   }
@@ -513,20 +508,19 @@ public class Parser {
         eat(Tag.NUM);
         break;
       default:
-        error(token, "num");
+        error(token, "");
         break;
     }
   }
 
   // literal ::= " { " {caractere} " } "
   public void literal() throws Exception {
-    System.out.println("cheguei aqui");
     switch (token.tag) {
       case STRING:
         letter();
         break;
       default:
-        error(token, "string");
+        error(token, "");
         break;
     }
   }
@@ -539,7 +533,7 @@ public class Parser {
         eat(Tag.ID);
         break;
       default:
-        error(token, "id");
+        error(token, "");
     }
   }
 
@@ -564,7 +558,7 @@ public class Parser {
         eat(Tag.FLOAT);
         break;
       default:
-        error(token, "digit");
+        error(token, "");
         break;
     }
   }

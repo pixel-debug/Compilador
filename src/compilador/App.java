@@ -35,10 +35,10 @@ public class App {
           //"Analisador Lexico: Token invalido na linha " + lexer.getLine()
           //);
         }
-        System.out.println("Total de linhas: " + lexer.getLine());
+        // System.out.println("Total de linhas: " + lexer.getLine());
 
-        System.out.println("\n\nTabela de símbolos:");
-        System.out.println(symbols.toString());
+        //System.out.println("\n\nTabela de símbolos:");
+        //System.out.println(symbols.toString());
       }
     } catch (FileNotFoundException e) {
       e.printStackTrace();
