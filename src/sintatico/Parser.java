@@ -8,7 +8,6 @@ public class Parser {
   private Token lastToken;
   private Lexico lexico;
   private Tag tag;
-  //private SintaxError erro;
 
   public Parser(Lexico lexico) throws Exception {
     this.lexico = lexico;
@@ -16,14 +15,14 @@ public class Parser {
   }
 
   private void advance() throws Exception {
-    System.out.println("lendo proximo token");
+    System.out.println("Lendo proximo token");
     lastToken=token;
     token = lexico.scan();
   }
 
   private void eat(Tag tag) throws Exception {
     if (token.tag == tag) {
-      System.out.println("eat: " + token);
+      System.out.println("eat: " + token + "(" + token.getToken() +")");
       advance();
     } else {
       error(token);
@@ -32,11 +31,11 @@ public class Parser {
 
   public void error(Token token) {
     System.out.println(
-      "Erro  na linha " +
+      "Erro na linha " +
       lexico.line +
       " próximo ao token '" +
       token.toString() +
-      "'" + token
+      "' do tipo " + token.getToken()
     );
     System.exit(0);
   }

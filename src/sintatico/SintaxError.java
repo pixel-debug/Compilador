@@ -9,7 +9,7 @@ public class SintaxError {
 
   public void error(Token token) {
     System.out.println(
-      "Erro  na linha " +
+      "Erro na linha " +
       lexico.line +
       " próximo ao token '" +
       token.toString() +
