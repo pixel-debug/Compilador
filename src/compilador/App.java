@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import lexico.*;
-import sintatico.Parser;
+import sintatico.*;
 import tabsimbolos.TabelaDeSimbolos;
 
 public class App {
