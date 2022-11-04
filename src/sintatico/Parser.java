@@ -17,14 +17,14 @@ public class Parser {
   }
 
   private void advance() throws Exception {
-    System.out.println("lendo proximo token");
+    System.out.println("Lendo proximo token");
     lastToken = token;
     token = lexico.scan();
   }
 
   private void eat(Tag tag) throws Exception {
     if (token.tag == tag) {
-      System.out.println("eat: " + token);
+      System.out.println("eat: " + token + "(" + token.getToken() + ")");
       advance();
     } else {
       error(token, tag.toString());
