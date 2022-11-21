@@ -4,13 +4,13 @@ import java.util.*;
 import lexico.*;
 import tabsimbolos.*;
 
-public class semantico {
+public class Semantico {
     private HashMap<Token, Id> table;
     private Tag result;
     private Tag currentType;
     private Tag currentExpression;
 
-    public semantico() {
+    public Semantico() {
         result = Tag.VOID;
         currentType = Tag.VOID;
         currentExpression = Tag.VOID;
