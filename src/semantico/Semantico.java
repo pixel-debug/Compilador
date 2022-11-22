@@ -4,6 +4,14 @@ import java.util.*;
 import lexico.*;
 import tabsimbolos.*;
 
+/* 
+    - corrigir tabela de simbolos
+    - implementar concatenação
+    - resultado final da expressao
+    - métodos para setar a currentExpression
+    - chamar no sintátic
+*/
+
 public class Semantico {
     private HashMap<Token, Id> table;
     private Tag result;
@@ -15,7 +23,6 @@ public class Semantico {
         currentType = Tag.VOID;
         currentExpression = Tag.VOID;
     }
-
     /* Operações para a tabela de símbolos */
     private String typeToString(Token token) {
         String type = "string";
@@ -55,7 +62,7 @@ public class Semantico {
             }
         } else if (currentExpression != Tag.VOID || result != Tag.VOID) {
             if (token instanceof Num) {
-                if (currentExpression != Tag.INT)
+                if (currentExpression != Tag.INT) 
                     errorLog(line, typeToString(token), "integer");
             } else if (token instanceof NumFloat) {
                 if (currentExpression != Tag.FLOAT)
@@ -66,7 +73,6 @@ public class Semantico {
             }
         }
     }
-
     /* Operações para as strings */
     private void errorOp(int line, String operacao) {
         System.out.println(line + " :" +
@@ -91,7 +97,7 @@ public class Semantico {
             }
         }
     }
-
+    
     /* Operações para os identificadores */
     private void errorId(int line) {
         System.out.println(line + " :" + 
@@ -105,18 +111,18 @@ public class Semantico {
                 errorId(line);
             }
             else{
-                currentExpression = table.get(id.getLexeme());
-            }
+                currentExpression = table.get(id.getLexeme()); 
+            }                                                   
         }
         else if(currentExpression != Tag.VOID || result != Tag.VOID){
             if(!table.containsKey(id)){
                 errorId(line);
             }
-            else{
+            else{ 
                 Id lastTerm = table.get(id);
                 if(currentExpression != lastTerm)
                     errorLog(line, typeToString(lastTerm), "identifier");
-            }
+            } 
         }
     }
 
