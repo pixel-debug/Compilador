@@ -1,13 +1,14 @@
 package sintatico;
 
 import lexico.*;
+import semantico.Semantico;
 
 public class Parser {
 
   private Token token;
   private Token lastToken;
   private Lexico lexico;
-  private Tag tag;
+  private Semantico semantico;
 
   //private SintaxError erro;
 
@@ -452,6 +453,7 @@ public class Parser {
 
   // addop ::= "+" | "-" | "||"
   public void addop() throws Exception {
+    semantico.checkStringOperation(token, lexico.line);
     switch (token.tag) {
       case SUM:
         eat(Tag.SUM);
@@ -470,6 +472,7 @@ public class Parser {
 
   // mulop ::= "*" | "/" | "&&"
   public void mulop() throws Exception {
+    semantico.checkStringOperation(token, lexico.line);
     switch (token.tag) {
       case MUL:
         eat(Tag.MUL);
@@ -530,6 +533,7 @@ public class Parser {
     switch (token.tag) {
       case ID:
         // VERIFICAR TABELA SIMBOLOS
+        semantico.updateSimbolTable(token, lexico.line);
         eat(Tag.ID);
         break;
       default:

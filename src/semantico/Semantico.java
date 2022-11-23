@@ -33,14 +33,14 @@ public class Semantico {
         return type;
     }
 
-    private void updateSimbolTable(Token token, int line) {
+    public void updateSimbolTable(Token token, int line) {
         // é preciso atualizar a tabela de simbolos
         // para receber a string tipo ao inves do lexema
-        if (table.containsKey(token.getToken())) {
+        if (table.containsKey(token)) {
             System.out.println(line + " :" + "error: redefinition of " + token.toString() + "' '");
             System.exit(0);
         } else {
-            table.put(token, currentType);
+            table.put(token, new Id(typeToString(token)));
         }
     }
 
@@ -94,6 +94,8 @@ public class Semantico {
                 case MUL:
                     errorOp(line, "*");
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -105,13 +107,13 @@ public class Semantico {
             System.exit(0);
     }
 
-    public void checkId(Id id, int line) {
+    public void checkId(Token id, int line) {
         if(currentExpression == Tag.VOID){
             if(!table.containsKey(id)){
                 errorId(line);
             }
             else{
-                currentExpression = table.get(id.getLexeme()); 
+                currentExpression = table.get(id).getLexeme(); 
             }                                                   
         }
         else if(currentExpression != Tag.VOID || result != Tag.VOID){
