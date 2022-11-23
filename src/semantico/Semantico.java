@@ -15,12 +15,12 @@ import tabsimbolos.*;
 public class Semantico {
     private HashMap<Token, Id> table;
     private Tag result;
-    private Tag currentType;
+    private String currentType;
     private Tag currentExpression;
 
     public Semantico() {
         result = Tag.VOID;
-        currentType = Tag.VOID;
+        currentType =  " ";
         currentExpression = Tag.VOID;
     }
     /* Operações para a tabela de símbolos */
@@ -34,8 +34,6 @@ public class Semantico {
     }
 
     public void updateSimbolTable(Token token, int line) {
-        // é preciso atualizar a tabela de simbolos
-        // para receber a string tipo ao inves do lexema
         if (table.containsKey(token)) {
             System.out.println(line + " :" + "error: redefinition of " + token.toString() + "' '");
             System.exit(0);
@@ -82,9 +80,6 @@ public class Semantico {
     public void checkStringOperation(Token token, int line) {
         if (result == Tag.STRING) {
             switch (token.tag) {
-                case SUM:
-                    // concatenar
-                    break;
                 case MIN:
                     errorOp(line, "-");
                     break;
@@ -108,23 +103,33 @@ public class Semantico {
     }
 
     public void checkId(Token id, int line) {
-        if(currentExpression == Tag.VOID){
+        if(currentType == " "){
             if(!table.containsKey(id)){
                 errorId(line);
             }
             else{
-                currentExpression = table.get(id).getLexeme(); 
+                currentType = table.get(id).getLexeme(); 
             }                                                   
         }
-        else if(currentExpression != Tag.VOID || result != Tag.VOID){
+        else if(currentType != " " || result != Tag.VOID){
             if(!table.containsKey(id)){
                 errorId(line);
             }
             else{ 
-                Id lastTerm = table.get(id);
-                if(currentExpression != lastTerm)
-                    errorLog(line, typeToString(lastTerm), "identifier");
+                String lastTerm = table.get(id).getLexeme();
+                if(currentType != lastTerm)
+                    errorLog(line, lastTerm, "identifier");
             } 
+        }
+    }
+
+    public void setCurrentType(Token token, int line) {
+        if(result == Tag.VOID){
+            if(!table.containsKey(token)){
+                errorId(line);
+            }else{
+                result = token.getToken();
+            }
         }
     }
 

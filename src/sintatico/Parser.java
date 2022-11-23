@@ -176,6 +176,7 @@ public class Parser {
 
   // assign-stmt ::= identifier "=" simple_expr
   public void assignStmt() throws Exception {
+    semantico.setCurrentType(token, lexico.line);
     switch (token.tag) {
       case ID:
         identifier();
@@ -491,6 +492,7 @@ public class Parser {
 
   // constant ::= integer_const | float_const | literal
   public void constant() throws Exception {
+    semantico.checkExprType(token, lexico.line);
     switch (token.tag) {
       case NUM:
         num_const();
@@ -534,6 +536,7 @@ public class Parser {
       case ID:
         // VERIFICAR TABELA SIMBOLOS
         semantico.updateSimbolTable(token, lexico.line);
+        semantico.checkId(token, lexico.line);
         eat(Tag.ID);
         break;
       default:
