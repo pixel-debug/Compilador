@@ -1,8 +1,10 @@
 package semantico;
 
 import java.util.*;
+
 import lexico.*;
 import tabsimbolos.*;
+import sintatico.*;
 
 /* 
     - corrigir tabela de simbolos
@@ -17,6 +19,8 @@ public class Semantico {
     private Tag result;
     private String currentType;
     private Tag currentExpression;
+    private Lexico lexico;
+    
 
     public Semantico() {
         result = Tag.VOID;
@@ -32,6 +36,14 @@ public class Semantico {
             type = "integer";
         return type;
     }
+
+    //NUM SERIA MELHOR LER O PROXIMO TOKEN POR AQUI NÃO??
+    //Ai verifica o semaitico da mesma forma do sintatico
+    /*private void advance() throws Exception {
+        System.out.println("Lendo proximo token");
+        token = lexico.scan();
+      }
+    */
 
     public void updateSimbolTable(Token token, int line) {
         if (table.containsKey(token)) {
@@ -108,16 +120,16 @@ public class Semantico {
                 errorId(line);
             }
             else{
-                currentType = table.get(id).getLexeme(); 
+                currentType = table.get(id).getValue(); 
             }                                                   
         }
-        else if(currentType != " " || result != Tag.VOID){
+        else if(!currentType.equals(" ") || result != Tag.VOID){
             if(!table.containsKey(id)){
                 errorId(line);
             }
             else{ 
-                String lastTerm = table.get(id).getLexeme();
-                if(currentType != lastTerm)
+                String lastTerm = table.get(id).getValue();
+                if(!Objects.equals(currentType, lastTerm))
                     errorLog(line, lastTerm, "identifier");
             } 
         }
