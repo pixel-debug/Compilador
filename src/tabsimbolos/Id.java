@@ -1,15 +1,20 @@
 package tabsimbolos;
+
+import lexico.*;
+import java.util.Objects;
+
+
 public class Id {
 
     private String lexeme;
-    private int type;
+    private Tag type;
 
     public Id(String lexeme) {
         this.lexeme = lexeme;
-        this.type = -1;
+        this.type = null;
     }
 
-    public Id(String lexeme, int type) {
+    public Id(String lexeme, Tag type) {
         this.lexeme = lexeme;
         this.type = type;
     }
@@ -22,17 +27,17 @@ public class Id {
         this.lexeme = lexeme;
     }
 
-    public int getType() {
+    public Tag getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Tag type) {
         this.type = type;
     }
 
     @Override
     public String toString() {
-        if (type >= 0)
+        if (Objects.nonNull(type))
             return "{ lexeme: " + lexeme + ", type: " + type + " }";
         else
             return "{ lexeme: " + lexeme + " }";

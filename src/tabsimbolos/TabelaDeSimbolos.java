@@ -3,6 +3,10 @@ import java.util.*;
 
 import lexico.*;
 
+/*
+ * Estrutura: <Token, Id(Lexema,tipo)>
+ */
+
 public class TabelaDeSimbolos {
 
   // Tabela de símbolos do ambiente.
