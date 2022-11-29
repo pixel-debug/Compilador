@@ -113,12 +113,15 @@ public class Semantico {
         }
     }
 
+    // tipo atual da expressão 
+    // garante que tipos iguais sejam operados
     public void setCurrentType(Token token, int line) {
-        if(result == Tag.VOID){
+        if(currentType == " "){
             if(!table.containsKey(token)){
                 errorId(line);
             }else{
-                result = token.getToken();
+                currentType = table.get(token).toString();
+                System.out.println("\n"+currentType);
             }
         }
     }
@@ -133,13 +136,23 @@ public class Semantico {
         return type;
     }
 
+    // atualiza o tipos na tabela
+    // verifica se há duas ocorrências iguais
     public void updateSimbolTable(Token token, Token lasToken, int line) {
-        if (table.containsKey(token)) {
-            System.out.println("Error: redefinition of '" + token.toString() + "' na linha " + line );
-            System.exit(0);
+        System.out.println("last token = " + lasToken);
+        if (table.containsKey(token)){
+            if(lasToken.tag == Tag.INT || lasToken.tag == Tag.FLOAT ||lasToken.tag == Tag.STRING) {
+                System.out.println("Error: redefinition of '" + token.toString() + "' na linha " + line );
+                System.exit(0);
+            }
         } else {
-            table.put(token, new Id(typeToString(lasToken)));
-            System.out.println(table);
+            if(lasToken.tag == Tag.INT || lasToken.tag == Tag.FLOAT ||lasToken.tag == Tag.STRING) {
+                table.put(token, new Id(typeToString(lasToken)));
+                System.out.println(table);
+            }
+            else{
+                errorId(line);
+            }
         }
     }
 

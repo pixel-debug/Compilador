@@ -94,7 +94,7 @@ public class Parser {
       case STRING:
         type();
         identList();
-
+        lastToken = token;
         eat(Tag.PV);
         break;
       default:
