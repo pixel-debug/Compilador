@@ -10,18 +10,31 @@ public class Parser {
   private Lexico lexico;
   private Semantico semantico;
 
+  //private SintaxError erro;
+
   public Parser(Lexico lexico) throws Exception {
     this.lexico = lexico;
+    semantico = new Semantico();
     advance();
   }
 
   private void advance() throws Exception {
     System.out.println("Lendo proximo token");
-    lastToken = token;
+   
     token = lexico.scan();
   }
 
   private void eat(Tag tag) throws Exception {
+    switch (token.tag) {
+      case INT:
+      case FLOAT:
+      case STRING:        
+        lastToken = token;
+        break;
+
+      default:
+        break;
+    }
     if (token.tag == tag) {
       System.out.println("eat: " + token + "(" + token.getToken() + ")");
       advance();
@@ -174,6 +187,7 @@ public class Parser {
 
   // assign-stmt ::= identifier "=" simple_expr
   public void assignStmt() throws Exception {
+    semantico.setCurrentType(token, lexico.line);
     switch (token.tag) {
       case ID:
         identifier();
@@ -451,6 +465,7 @@ public class Parser {
 
   // addop ::= "+" | "-" | "||"
   public void addop() throws Exception {
+    semantico.checkStringOperation(token, lexico.line);
     switch (token.tag) {
       case SUM:
         eat(Tag.SUM);
@@ -469,6 +484,7 @@ public class Parser {
 
   // mulop ::= "*" | "/" | "&&"
   public void mulop() throws Exception {
+    semantico.checkStringOperation(token, lexico.line);
     switch (token.tag) {
       case MUL:
         eat(Tag.MUL);
@@ -487,6 +503,7 @@ public class Parser {
 
   // constant ::= integer_const | float_const | literal
   public void constant() throws Exception {
+    semantico.checkExprType(token, lexico.line);
     switch (token.tag) {
       case NUM:
         num_const();
@@ -528,6 +545,9 @@ public class Parser {
   public void identifier() throws Exception {
     switch (token.tag) {
       case ID:
+        // VERIFICAR TABELA SIMBOLOS
+        semantico.updateSimbolTable(token, lastToken, lexico.line);
+        //semantico.checkId(token, lexico.line);
         eat(Tag.ID);
         break;
       default:
@@ -560,5 +580,6 @@ public class Parser {
         break;
     }
   }
+  // caractere ::= um dos caracteres ASCII, exceto quebra de linha
 
 }
