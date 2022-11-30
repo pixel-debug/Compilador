@@ -38,9 +38,9 @@ public class Id {
     @Override
     public String toString() {
         if (Objects.nonNull(type))
-            return "{ lexeme: " + lexeme + ", type: " + type + " }";
+            return type.toString();
         else
-            return "{ lexeme: " + lexeme + " }";
+            return lexeme;
     }
 
 }

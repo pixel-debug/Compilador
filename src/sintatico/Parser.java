@@ -95,6 +95,8 @@ public class Parser {
         type();
         identList();
         lastToken = token;
+      //  System.out.println("\nlast token = " + lastToken);
+
         eat(Tag.PV);
         break;
       default:
@@ -183,11 +185,13 @@ public class Parser {
         error(token, "");
         break;
     }
+    semantico.resertType();
   }
 
   // assign-stmt ::= identifier "=" simple_expr
   public void assignStmt() throws Exception {
-    semantico.setCurrentType(token, lexico.line);
+    System.out.println("TOKEN QUE ESTÁ ENTRANDO = " + token.tag);
+    semantico.checkExprType(token, lexico.line);
     switch (token.tag) {
       case ID:
         identifier();
@@ -503,7 +507,6 @@ public class Parser {
 
   // constant ::= integer_const | float_const | literal
   public void constant() throws Exception {
-    semantico.checkExprType(token, lexico.line);
     switch (token.tag) {
       case NUM:
         num_const();
@@ -547,7 +550,6 @@ public class Parser {
       case ID:
         // VERIFICAR TABELA SIMBOLOS
         semantico.updateSimbolTable(token, lastToken, lexico.line);
-        //semantico.checkId(token, lexico.line);
         eat(Tag.ID);
         break;
       default:

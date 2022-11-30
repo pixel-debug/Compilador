@@ -11,19 +11,19 @@ public class TabelaDeSimbolos {
 
   // Tabela de símbolos do ambiente.
 
-  private HashMap<Token, Id> table;
+  private Hashtable<Token, Id> table;
 
   protected TabelaDeSimbolos prev;
 
   public TabelaDeSimbolos() {
     // cria a TS para o ambiente
-    this.table = new HashMap();
+    this.table = new Hashtable();
     this.prev = null;
   }
 
   public TabelaDeSimbolos(TabelaDeSimbolos n) {
     // cria a TS para o ambiente
-    this.table = new HashMap();
+    this.table = new Hashtable();
 
     // associa o ambiente atual ao anterior
     this.prev = n;
@@ -49,5 +49,9 @@ public class TabelaDeSimbolos {
       symbols += t + " -> " + id.toString() + "\n";
     }
     return symbols;
+  }
+
+  public Hashtable getTable(){
+    return table;
   }
 }
