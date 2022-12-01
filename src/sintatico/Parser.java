@@ -108,10 +108,12 @@ public class Parser {
   // ident-list ::= identifier {"," identifier}
   public void identList() throws Exception {
     switch (token.tag) {
-      case ID:
+      case ID:  
+        semantico.updateSimbolTable(token, lastToken, lexico.line);
         identifier();
         while (token.tag == Tag.VRG) {
           eat(Tag.VRG);
+          semantico.updateSimbolTable(token, lastToken, lexico.line);
           identifier();
         }
         break;
@@ -190,11 +192,11 @@ public class Parser {
 
   // assign-stmt ::= identifier "=" simple_expr
   public void assignStmt() throws Exception {
-    System.out.println("TOKEN QUE ESTÁ ENTRANDO = " + token.tag);
-    semantico.checkExprType(token, lexico.line);
     switch (token.tag) {
       case ID:
         identifier();
+        semantico.checkExprType(token, lexico.line);
+
         eat(Tag.PPV);
         simpleExpr();
         break;
@@ -421,6 +423,7 @@ public class Parser {
 
   // factor ::= identifier | constant | "(" expression ")"
   public void factor() throws Exception {
+
     switch (token.tag) {
       case ID:
         identifier();
@@ -547,9 +550,8 @@ public class Parser {
   // identifier ::= (letter | _ ) (letter | digit )*
   public void identifier() throws Exception {
     switch (token.tag) {
-      case ID:
-        // VERIFICAR TABELA SIMBOLOS
-        semantico.updateSimbolTable(token, lastToken, lexico.line);
+      case ID:   
+        semantico.checkId(token, lexico.line);
         eat(Tag.ID);
         break;
       default:

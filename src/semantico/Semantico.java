@@ -27,20 +27,12 @@ public class Semantico {
         currentType = " ";
         currentExpression = Tag.VOID;
         this.symbols = symbols;
-    //    this.table = symbols.getTable();
+        // this.table = symbols.getTable();
     }
-
-    
-
-
-
-
-
 
     /*
      * SEMÂNTICO PARA OS IDENTIFICADORES
      */
-
 
     /* Operações para os identificadores */
     private void errorId(int line) {
@@ -62,17 +54,19 @@ public class Semantico {
     // verifica se há duas ocorrências iguais
     public void updateSimbolTable(Token token, Token lasToken, int line) {
         if (table.containsKey(token)) {
-            if (lasToken.tag == Tag.INT || lasToken.tag == Tag.FLOAT || lasToken.tag == Tag.STRING) {
-                System.out.println("Error: redefinition of '" + token.toString() + "' na linha " + line);
-                System.exit(0);
-            }
+            System.out.println("Error: redefinition of '" + token.toString() + "' na linha " + line);
+            System.exit(0);
         } else {
-            if (lasToken.tag == Tag.INT || lasToken.tag == Tag.FLOAT || lasToken.tag == Tag.STRING) {
-                table.put(token, new Id(typeToString(lasToken)));
-            } else {
-                errorId(line);
-            }
+            table.put(token, new Id(typeToString(lasToken)));
+
         }
+    }
+
+    public boolean checkId(Token token, int line) {
+        if (!table.containsKey(token) && token.tag == Tag.ID) {
+            errorId(line);
+        }
+        return false;
     }
 
     /*
@@ -105,7 +99,7 @@ public class Semantico {
 
     /*
      * SEMÂNTICO PARA AS OPERAÇÕES DENTRO DE EXPRESSÕES
-    */
+     */
 
     // tipo atual da expressão
     // garante que tipos iguais sejam operados
@@ -128,39 +122,34 @@ public class Semantico {
     }
 
     public void checkExprType(Token token, int line) {
-        System.out.println("Current expression tag : " + currentExpression);
-        System.out.println("\n" + table.get(token));
-        if (currentExpression == Tag.VOID) {
-            if (table.get(token).toString().equals("INTEGER")) {
-                currentExpression = Tag.INT;
-            } else if (table.get(token).toString().equals("FLOAT")) {
-                currentExpression = Tag.FLOAT;
-            } else {
-                currentExpression = Tag.STRING;
-            }
-            System.out.println("Current expression atribution : " + currentExpression);
+        if(checkId(token, line)){
+            if (currentExpression == Tag.VOID) {
+                if (table.get(token).toString().equals("INTEGER")) {
+                    currentExpression = Tag.INT;
+                } else if (table.get(token).toString().equals("FLOAT")) {
+                    currentExpression = Tag.FLOAT;
+                } else {
+                    currentExpression = Tag.STRING;
+                }
+                System.out.println("Current expression atribution : " + currentExpression);
 
-        } 
-        // Diego, aqui tem que analisar a questão do assign,
-        // variaveis inteiras recebem inteiros
-        // variaveis floats recebem floats
-        // porém, a tag deles é a mesma (NUM)
-        // Aqui analisa a expressão também, se o tipo atual for diferente quebra
-        else if (currentExpression != Tag.VOID) {
-            if (token.getToken() == Tag.INT) {
-                if (currentExpression != Tag.INT)
-                    errorLog(line, typeToString(token), "integer");
-            } else if (token.getToken() == Tag.FLOAT) {
-                if (currentExpression != Tag.FLOAT)
-                    errorLog(line, typeToString(token), "float");
-            } else {
-                if (currentExpression != Tag.STRING)
-                    errorLog(line, typeToString(token), "literal");
+            } else if (currentExpression != Tag.VOID) {
+                System.out.println("\nType in expr = " + currentExpression);
+                if (token.getToken() == Tag.INT) {
+                    if (currentExpression != Tag.INT)
+                        errorLog(line, typeToString(token), "integer");
+                } else if (token.getToken() == Tag.FLOAT) {
+                    if (currentExpression != Tag.FLOAT)
+                        errorLog(line, typeToString(token), "float");
+                } else {
+                    if (currentExpression != Tag.STRING)
+                        errorLog(line, typeToString(token), "literal");
+                }
             }
         }
     }
 
-    public void resertType(){
+    public void resertType() {
         currentExpression = Tag.VOID;
     }
 }
