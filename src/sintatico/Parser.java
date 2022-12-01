@@ -194,8 +194,9 @@ public class Parser {
   public void assignStmt() throws Exception {
     switch (token.tag) {
       case ID:
-        identifier();
         semantico.checkExprType(token, lexico.line);
+
+        identifier();
 
         eat(Tag.PPV);
         simpleExpr();

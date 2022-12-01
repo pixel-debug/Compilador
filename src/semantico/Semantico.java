@@ -4,15 +4,6 @@ import java.util.*;
 
 import lexico.*;
 import tabsimbolos.*;
-import sintatico.*;
-
-/* 
-    - corrigir tabela de simbolos
-    - implementar concatenação
-    - resultado final da expressao
-    - métodos para setar a currentExpression
-    - chamar no sintátic
-*/
 
 public class Semantico {
     private Hashtable table = new Hashtable();
@@ -31,10 +22,9 @@ public class Semantico {
     }
 
     /*
-     * SEMÂNTICO PARA OS IDENTIFICADORES
+     * OPERAÇÕES SEMÂNTICAS PARA OS IDENTIFICADORES
      */
 
-    /* Operações para os identificadores */
     private void errorId(int line) {
         System.out.println("Error: identificador não declarado na linha " + line + ". Abortando ...");
         System.exit(0);
@@ -62,15 +52,19 @@ public class Semantico {
         }
     }
 
+    // verifica se o ID já foi declarado
     public boolean checkId(Token token, int line) {
         if (!table.containsKey(token) && token.tag == Tag.ID) {
             errorId(line);
+        }
+        else if (table.containsKey(token) && token.tag == Tag.ID) {
+            return true;
         }
         return false;
     }
 
     /*
-     * SEMÂNTICO PARA AS OPERAÇÕES DE STRING
+     * OPERAÇÕES SEMÂNTICAS PARA AS OPERAÇÕES DE STRING
      */
 
     private void errorOp(int line, String operacao) {
@@ -98,7 +92,7 @@ public class Semantico {
     }
 
     /*
-     * SEMÂNTICO PARA AS OPERAÇÕES DENTRO DE EXPRESSÕES
+     * OPERAÇÕES SEMÂNTICAS PARA AS OPERAÇÕES DENTRO DE EXPRESSÕES
      */
 
     // tipo atual da expressão
