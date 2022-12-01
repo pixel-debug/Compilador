@@ -152,13 +152,7 @@ public class Lexico {
           }
           String s = sb.toString();
           readch();
-          return new Lexeme(s, Tag.STRING);
-        /*
-         * case '.':
-         * readch();
-         * return new Token(Tag.DOT);
-         */
-        // DEVE - SE TRATAR A STRING (TAG.LIT)
+          return new Lexeme(s, Tag.LIT);
 
       }
 

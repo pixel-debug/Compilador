@@ -308,7 +308,7 @@ public class Parser {
       case MIN:
         simpleExpr();
         break;
-      case STRING:
+      case LIT:
         literal();
         break;
       default:
@@ -349,7 +349,7 @@ public class Parser {
   public void simpleExpr() throws Exception {
     switch (token.tag) {
       case ID:
-      case STRING:
+      case LIT:
       case NUM:
       case AC:
       case AP:
@@ -374,7 +374,7 @@ public class Parser {
   public void term() throws Exception {
     switch (token.tag) {
       case ID:
-      case STRING:
+      case LIT:
       case NUM:
       case AC:
       case AP:
@@ -410,7 +410,7 @@ public class Parser {
         break;
       case ID:
       case NUM:
-      case STRING:
+      case LIT:
         factor();
         break;
       default:
@@ -426,7 +426,7 @@ public class Parser {
         identifier();
         break;
       case NUM:
-      case STRING:
+      case LIT:
         constant();
         break;
       case AP:
@@ -511,7 +511,7 @@ public class Parser {
       case NUM:
         num_const();
         break;
-      case STRING:
+      case LIT:
         literal();
         break;
       default:
@@ -535,7 +535,7 @@ public class Parser {
   // literal ::= " { " {caractere} " } "
   public void literal() throws Exception {
     switch (token.tag) {
-      case STRING:
+      case LIT:
         letter();
         break;
       default:
@@ -560,8 +560,8 @@ public class Parser {
   // letter ::= [A-za-z]
   public void letter() throws Exception {
     switch (token.tag) {
-      case STRING:
-        eat(Tag.STRING);
+      case LIT:
+        eat(Tag.LIT);
         break;
       default:
         error(token, "string");
