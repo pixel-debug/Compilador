@@ -56,8 +56,7 @@ public class Semantico {
     public boolean checkId(Token token, int line) {
         if (!table.containsKey(token) && token.tag == Tag.ID) {
             errorId(line);
-        }
-        else if (table.containsKey(token) && token.tag == Tag.ID) {
+        } else if (table.containsKey(token) && token.tag == Tag.ID) {
             return true;
         }
         return false;
@@ -115,8 +114,8 @@ public class Semantico {
                 " Esperado: " + expectedType);
     }
 
-    public void checkExprType(Token token, int line) {
-        if(checkId(token, line)){
+    public void setExprType(Token token, int line){
+        if (checkId(token, line)) {
             if (currentExpression == Tag.VOID) {
                 if (table.get(token).toString().equals("INTEGER")) {
                     currentExpression = Tag.INT;
@@ -126,20 +125,24 @@ public class Semantico {
                     currentExpression = Tag.STRING;
                 }
                 System.out.println("Current expression atribution : " + currentExpression);
-
-            } else if (currentExpression != Tag.VOID) {
-                System.out.println("\nType in expr = " + currentExpression);
-                if (token.getToken() == Tag.INT) {
-                    if (currentExpression != Tag.INT)
-                        errorLog(line, typeToString(token), "integer");
-                } else if (token.getToken() == Tag.FLOAT) {
-                    if (currentExpression != Tag.FLOAT)
-                        errorLog(line, typeToString(token), "float");
-                } else {
-                    if (currentExpression != Tag.STRING)
-                        errorLog(line, typeToString(token), "literal");
-                }
             }
+        }
+    }
+    public void checkExprType(Token token, int line) {
+        if (currentExpression != Tag.VOID) {
+            System.out.println("\nType in expr = " + currentExpression);
+            System.out.println("\n\n" + token.getValue());
+            if (token.getValue() instanceof Integer) {
+                if (currentExpression != Tag.INT)
+                    errorLog(line, token.toString(), "integer");
+            } else if (token.getValue() instanceof Float) {
+                if (currentExpression != Tag.FLOAT)
+                    errorLog(line, token.toString(), "float");
+            } else {
+                if (currentExpression != Tag.STRING)
+                    errorLog(line, token.toString(), "literal");
+            }
+
         }
     }
 

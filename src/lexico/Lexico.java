@@ -163,7 +163,7 @@ public class Lexico {
           value = 10 * value + Character.digit(ch, 10);
           readch();
         } while (Character.isDigit(ch));
-        if (ch != '.') return new Token(Tag.NUM, value);
+        if (ch != '.') return new Token(Tag.NUM, value, false);
 
         float aux = 10;
         float float_value = 0;
@@ -173,7 +173,7 @@ public class Lexico {
           float_value += (Character.digit(ch, 10) / 10.0);
           aux = aux * 10;
         }
-        return new Token(Tag.NUM, float_value);
+        return new Token(Tag.NUM, float_value, true);
       }
 
       // Identificadores

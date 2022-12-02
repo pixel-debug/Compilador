@@ -4,24 +4,24 @@ import java.util.Objects;
 
 public class Token {
   public final Tag tag; //constante que representa o token
-  public final Integer valueInt;
-  public final Float valueFloat;
+  private final Integer valueInt;
+  private final Float valueFloat;
 
   public Token (Tag t){
     tag = t;
     valueFloat = null;
     valueInt = null;
   }
-  public Token (Tag t, int value){
+  public Token (Tag t, Number value, boolean isFloat){
     tag = t;
-    valueInt = value;
-    valueFloat = null;
-  }
-
-  public Token (Tag t, float value){
-    tag = t;
-    valueFloat = value;
-    valueInt = null;
+    if(!isFloat){
+      valueInt = Integer.parseInt(value.toString());
+      valueFloat = null;
+    }
+    else{
+      valueInt = null;
+      valueFloat = Float.parseFloat(value.toString());;
+    }
   }
 
   public String toString(){
@@ -32,7 +32,7 @@ public class Token {
     return this.tag;
   }
 
-  public Float getValue(){
-    return Objects.isNull(valueInt) ? (float) valueInt : valueFloat;
+  public Number getValue(){
+    return Objects.isNull(this.valueInt) ? this.valueFloat : this.valueInt;
   }
 }

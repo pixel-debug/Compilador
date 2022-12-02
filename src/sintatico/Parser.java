@@ -187,24 +187,27 @@ public class Parser {
         error(token, "");
         break;
     }
-    semantico.resertType();
   }
 
   // assign-stmt ::= identifier "=" simple_expr
   public void assignStmt() throws Exception {
     switch (token.tag) {
       case ID:
-        semantico.checkExprType(token, lexico.line);
+        semantico.setExprType(token, lexico.line);
 
         identifier();
+        eat(Tag.PPV); 
+        semantico.checkExprType(token, lexico.line);
 
-        eat(Tag.PPV);
         simpleExpr();
+      //  semantico.resertType();
         break;
       default:
         error(token, "");
         break;
     }
+    
+
   }
 
   // if-stmt ::= if condition then stmt-list end | if condition then stmt-list
