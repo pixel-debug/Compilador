@@ -18,12 +18,15 @@ public class Semantico {
         currentType = " ";
         currentExpression = Tag.VOID;
         this.symbols = symbols;
-        // this.table = symbols.getTable();
     }
 
     /*
      * OPERAÇÕES SEMÂNTICAS PARA OS IDENTIFICADORES
      */
+
+    public Hashtable getTable() {
+        return table;
+    }
 
     private void errorId(int line) {
         System.out.println("Error: identificador não declarado na linha " + line + ". Abortando ...");
@@ -42,13 +45,12 @@ public class Semantico {
 
     // atualiza o tipos na tabela
     // verifica se há duas ocorrências iguais
-    public void updateSimbolTable(Token token, Token lasToken, int line) {
+    public void updateSimbolTable(Token token, Token lastToken, int line) {
         if (table.containsKey(token)) {
             System.out.println("Error: redefinition of '" + token.toString() + "' na linha " + line);
             System.exit(0);
         } else {
-            table.put(token, new Id(typeToString(lasToken)));
-
+            table.put(token, new Id(typeToString(lastToken)));
         }
     }
 
@@ -108,10 +110,11 @@ public class Semantico {
     }
 
     /* Operações para a expressões */
-    private void errorLog(int line, String type, String expectedType) {
+    private void errorLog(int line, String type, String expectedType, String sendType) {
         System.out.println(line + " :" +
-                " .Error: tipo " + type + "incompatível." +
-                " Esperado: " + expectedType);
+                " .Error: tipo " + type + " incompatível." +
+                " Esperado: " + expectedType +
+                " Recebido: " + sendType);
     }
 
     public void setExprType(Token token, int line){
@@ -128,22 +131,37 @@ public class Semantico {
             }
         }
     }
+
     public void checkExprType(Token token, int line) {
         if (currentExpression != Tag.VOID) {
             System.out.println("\nType in expr = " + currentExpression);
-            System.out.println("\n\n" + token.getValue());
-            if (token.getValue() instanceof Integer) {
-                if (currentExpression != Tag.INT)
-                    errorLog(line, token.toString(), "integer");
-            } else if (token.getValue() instanceof Float) {
-                if (currentExpression != Tag.FLOAT)
-                    errorLog(line, token.toString(), "float");
-            } else {
-                if (currentExpression != Tag.STRING)
-                    errorLog(line, token.toString(), "literal");
+            if (token.tag == Tag.NUM) {
+                if (token.getType().equals("int")) {
+                    if (currentExpression != Tag.INT)
+                        errorLog(line, token.toString(), currentExpression.toString(),"INTEGER");
+                } else if (token.getType().equals("float")) {
+                    if (currentExpression != Tag.FLOAT)
+                        errorLog(line, token.toString(),currentExpression.toString(),"FLOAT");
+                } else {
+                    if (currentExpression != Tag.STRING)
+                        errorLog(line, token.toString(),currentExpression.toString(),"LITERAL");
+                }
+            } else if (token.tag == Tag.ID && checkId(token, line)) {
+                System.out.println(table.get(token));
+                if (table.get(token).toString().equals("INTEGER")) {
+                    if (currentExpression != Tag.INT)
+                        errorLog(line, token.toString(), currentExpression.toString(),"INTEGER");
+                } else if (table.get(token).toString().equals("FLOAT")) {
+                    if (currentExpression != Tag.FLOAT)
+                        errorLog(line, token.toString(), currentExpression.toString(),"FLOAT");
+                } else {
+                    if (currentExpression != Tag.STRING)
+                        errorLog(line, token.toString(), currentExpression.toString(),"LITERAL");
+                }
             }
 
         }
+
     }
 
     public void resertType() {

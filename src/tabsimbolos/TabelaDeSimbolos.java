@@ -4,7 +4,7 @@ import java.util.*;
 import lexico.*;
 
 /*
- * Estrutura: <Token, Id(Lexema,tipo)>
+ * Estrutura: <Token, Id(Lexema,tipo)> 
  */
 
 public class TabelaDeSimbolos {
@@ -29,6 +29,10 @@ public class TabelaDeSimbolos {
     this.prev = n;
   }
 
+  public void setTable(Hashtable<Token, Id> table) {
+    this.table = table;
+  }
+
   public void put(Token w, Id i) {
     this.table.put(w, i);
   }
@@ -46,7 +50,7 @@ public class TabelaDeSimbolos {
     String symbols = "";
     for (Token t : table.keySet()) {
       Id id = table.get(t);
-      symbols += t + " -> " + id.toString() + "\n";
+      symbols += t + ": "+ t.getValue() + " -> " + id.toString() + "\n";
     }
     return symbols;
   }

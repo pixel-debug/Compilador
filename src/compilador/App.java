@@ -23,6 +23,7 @@ public class App {
         lexer = new Lexico(chooser.getSelectedFile().toString(), symbols);
         parser = new Parser(lexer);
         parser.program();
+        symbols.setTable(parser.getSemantico().getTable());
 
         // for para percorrer o arquivo
         Scanner input = new Scanner(chooser.getSelectedFile());

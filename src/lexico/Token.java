@@ -22,7 +22,7 @@ public class Token {
       valueInt = null;
       valueFloat = Float.parseFloat(value.toString());;
     }
-  }
+  } 
 
   public String toString(){
     return "" + tag;
@@ -32,7 +32,21 @@ public class Token {
     return this.tag;
   }
 
-  public Number getValue(){
-    return Objects.isNull(this.valueInt) ? this.valueFloat : this.valueInt;
+  public String getValue(){
+    if (Objects.nonNull(this.valueInt)){
+      return this.valueInt.toString();
+    } else if(Objects.nonNull(this.valueFloat)){
+      return this.valueFloat.toString();
+    }
+    else return " ";
+  }
+
+  public String getType(){
+    if (Objects.nonNull(this.valueInt)){
+      return "int";
+    } else if(Objects.nonNull(this.valueFloat)){
+      return "float";
+    }
+    else return " ";
   }
 }

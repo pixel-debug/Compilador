@@ -18,6 +18,11 @@ public class Parser {
     advance();
   }
 
+  public Semantico getSemantico() {
+    return semantico;
+  }
+
+
   private void advance() throws Exception {
     System.out.println("Lendo proximo token");
    
@@ -168,6 +173,7 @@ public class Parser {
       case ID:
         assignStmt();
         eat(Tag.PV);
+        semantico.resertType();
         break;
       case IF:
         ifStmt();
@@ -200,7 +206,6 @@ public class Parser {
         semantico.checkExprType(token, lexico.line);
 
         simpleExpr();
-      //  semantico.resertType();
         break;
       default:
         error(token, "");
@@ -366,6 +371,7 @@ public class Parser {
           token.tag == Tag.SUM || token.tag == Tag.MIN || token.tag == Tag.OR
         ) {
           addop();
+          semantico.checkExprType(token, lexico.line);
           term();
         }
 
@@ -391,6 +397,7 @@ public class Parser {
           token.tag == Tag.MUL || token.tag == Tag.DIV || token.tag == Tag.AND
         ) {
           mulop();
+          semantico.checkExprType(token, lexico.line);
           factorA();
         }
         break;
