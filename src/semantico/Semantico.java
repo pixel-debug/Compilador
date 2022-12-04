@@ -117,8 +117,9 @@ public class Semantico {
                 " Recebido: " + sendType);
     }
 
-    public void setExprType(Token token, int line){
+    public void setExprType(Token token, int line) {
         if (checkId(token, line)) {
+            System.out.println(token.tag + " " + table.get(token));
             if (currentExpression == Tag.VOID) {
                 if (table.get(token).toString().equals("INTEGER")) {
                     currentExpression = Tag.INT;
@@ -127,36 +128,39 @@ public class Semantico {
                 } else {
                     currentExpression = Tag.STRING;
                 }
-                System.out.println("Current expression atribution : " + currentExpression);
+                System.out.println("Current expression atribution : " + currentExpression + " " + line);
             }
         }
     }
 
     public void checkExprType(Token token, int line) {
         if (currentExpression != Tag.VOID) {
-            System.out.println("\nType in expr = " + currentExpression);
+            System.out.println(currentExpression + " " + token.tag);
+            System.out.println("Type in expr = " + currentExpression);
+
             if (token.tag == Tag.NUM) {
                 if (token.getType().equals("int")) {
                     if (currentExpression != Tag.INT)
-                        errorLog(line, token.toString(), currentExpression.toString(),"INTEGER");
+                        errorLog(line, token.toString(), currentExpression.toString(), "INTEGER");
                 } else if (token.getType().equals("float")) {
                     if (currentExpression != Tag.FLOAT)
-                        errorLog(line, token.toString(),currentExpression.toString(),"FLOAT");
-                } else {
-                    if (currentExpression != Tag.STRING)
-                        errorLog(line, token.toString(),currentExpression.toString(),"LITERAL");
+                        errorLog(line, token.toString(), currentExpression.toString(), "FLOAT");
                 }
+            } else if (token.tag == Tag.LIT) {
+                if (currentExpression != Tag.STRING)
+                    errorLog(line, token.toString(), currentExpression.toString(), "LITERAL");
             } else if (token.tag == Tag.ID && checkId(token, line)) {
                 System.out.println(table.get(token));
                 if (table.get(token).toString().equals("INTEGER")) {
                     if (currentExpression != Tag.INT)
-                        errorLog(line, token.toString(), currentExpression.toString(),"INTEGER");
+                        errorLog(line, token.toString(), currentExpression.toString(), "INTEGER");
                 } else if (table.get(token).toString().equals("FLOAT")) {
                     if (currentExpression != Tag.FLOAT)
-                        errorLog(line, token.toString(), currentExpression.toString(),"FLOAT");
+                        errorLog(line, token.toString(), currentExpression.toString(), "FLOAT");
                 } else {
+                    System.out.println("estou aqui");
                     if (currentExpression != Tag.STRING)
-                        errorLog(line, token.toString(), currentExpression.toString(),"LITERAL");
+                        errorLog(line, token.toString(), currentExpression.toString(), "LITERAL");
                 }
             }
 

@@ -200,7 +200,6 @@ public class Parser {
     switch (token.tag) {
       case ID:
         semantico.setExprType(token, lexico.line);
-
         identifier();
         eat(Tag.PPV); 
         semantico.checkExprType(token, lexico.line);
@@ -223,15 +222,18 @@ public class Parser {
         eat(Tag.IF);
         condition();
         eat(Tag.THEN);
+        semantico.resertType();
         stmtList();
         switch (token.tag) {
           case END:
             eat(Tag.END);
+            semantico.resertType();
             break;
           case ELSE:
             eat(Tag.ELSE);
             stmtList();
             eat(Tag.END);
+            semantico.resertType();
             break;
           default:
             error(token, "");
@@ -347,6 +349,7 @@ public class Parser {
           token.tag == Tag.NE
         ) {
           relop();
+          semantico.checkExprType(token, lexico.line);
           simpleExpr();
         }
         break;
@@ -424,6 +427,7 @@ public class Parser {
       case ID:
       case NUM:
       case LIT:
+        semantico.setExprType(token, lexico.line);
         factor();
         break;
       default:
@@ -493,6 +497,7 @@ public class Parser {
         break;
       case OR:
         eat(Tag.OR);
+        semantico.resertType();
         break;
       default:
         error(token, "");
@@ -512,6 +517,7 @@ public class Parser {
         break;
       case AND:
         eat(Tag.AND);
+        semantico.resertType();
         break;
       default:
         error(token, "");
