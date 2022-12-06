@@ -487,7 +487,7 @@ public class Parser {
 
   // addop ::= "+" | "-" | "||"
   public void addop() throws Exception {
-    semantico.checkStringOperation(token, lexico.line);
+    semantico.checkOperation(token, lexico.line);
     switch (token.tag) {
       case SUM:
         eat(Tag.SUM);
@@ -507,7 +507,7 @@ public class Parser {
 
   // mulop ::= "*" | "/" | "&&"
   public void mulop() throws Exception {
-    semantico.checkStringOperation(token, lexico.line);
+    semantico.checkOperation(token, lexico.line);
     switch (token.tag) {
       case MUL:
         eat(Tag.MUL);

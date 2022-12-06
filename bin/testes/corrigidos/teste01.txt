@@ -4,14 +4,14 @@ start
 	float C,x,total;
 	
 	a = 2;
-	x = 1;
+	x = 1.9;
 	scan (b);
 	scan (a);
-	result = (a*b + 1) / 2;
+	total = (a*b + 1) / 2;
 	print ({Resultado: });
 	print (result);
 	print ({Total: });
-	total = a / x;
+	total = x / x;
 	print ({Total: });
 	print ({total});
 exit

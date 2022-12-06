@@ -29,7 +29,7 @@ public class Semantico {
     }
 
     private void errorId(int line) {
-        System.out.println("\033[1;31mError:\033[0m identificador não declarado na linha " + line + ". Abortando ...");
+        System.out.println("\033[1;31mErro:\033[0m identificador não declarado na linha " + line + ". Abortando ...");
         System.exit(0);
     }
 
@@ -65,37 +65,52 @@ public class Semantico {
     }
 
     /*
-     * OPERAÇÕES SEMÂNTICAS PARA AS OPERAÇÕES DE STRING
+     * OPERAÇÕES SEMÂNTICAS PARA AS OPERAÇÕES
      */
 
-    private void errorOp(int line, String operacao) {
+    private void errorString(int line, String operacao) {
         System.out.println(
-                "\033[1;31mError\033[0m na linha" +
+                "\033[1;31mErro\033[0m na linha" +
                         line + " :operação inválida para 'literal' "
                         + operacao + "' '");
         System.exit(0);
 
     }
 
+    private void errorDiv(int line) {
+        System.out.println(
+                "\033[1;31mErro\033[0m na linha " +
+                        line + ":operação inválida para divisão."
+                        + " Atibuição do resultado da divisão apenas para IDs do tipo float");
+        System.exit(0);
+
+    }
+    
     // apenas a concatenação {+} é permitida
-    public void checkStringOperation(Token token, int line) {
-        if (result == Tag.STRING) {
+    public void checkOperation(Token token, int line) {
+        if (currentExpression == Tag.STRING) {
             switch (token.tag) {
                 case MIN:
-                    errorOp(line, "-");
+                    errorString(line, "-");
                     break;
                 case DIV:
-                    errorOp(line, "/");
+                    errorString(line, "/");
                     break;
                 case MUL:
-                    errorOp(line, "*");
+                    errorString(line, "*");
                     break;
                 default:
                     break;
             }
         }
+        else{
+            if(token.tag == Tag.DIV && currentExpression != Tag.FLOAT){
+                errorDiv(line);
+            }
+        }
     }
 
+    
     /*
      * OPERAÇÕES SEMÂNTICAS PARA AS OPERAÇÕES DENTRO DE EXPRESSÕES
      */
@@ -115,8 +130,8 @@ public class Semantico {
     /* Operações para a expressões */
     private void errorLog(int line, String type, String expectedType, String sendType) {
         System.out.println(
-                "\033[1;31mError\033[0m na linha" +
-                        line + " :tipo " + type + " incompatível." +
+                "\033[1;31mErro\033[0m na linha " +
+                        line + ":tipo " + type + " incompatível." +
                         " Esperado: " + expectedType +
                         " Recebido: " + sendType);
         System.exit(0);
