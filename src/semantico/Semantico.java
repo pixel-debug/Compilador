@@ -29,7 +29,7 @@ public class Semantico {
     }
 
     private void errorId(int line) {
-        System.out.println("Error: identificador não declarado na linha " + line + ". Abortando ...");
+        System.out.println("\033[1;31mError:\033[0m identificador não declarado na linha " + line + ". Abortando ...");
         System.exit(0);
     }
 
@@ -47,7 +47,7 @@ public class Semantico {
     // verifica se há duas ocorrências iguais
     public void updateSimbolTable(Token token, Token lastToken, int line) {
         if (table.containsKey(token)) {
-            System.out.println("Error: redefinition of '" + token.toString() + "' na linha " + line);
+            System.out.println("\033[1;31mError:\033[0m redefinition of '" + token.toString() + "' na linha " + line);
             System.exit(0);
         } else {
             table.put(token, new Id(typeToString(lastToken)));
@@ -69,8 +69,12 @@ public class Semantico {
      */
 
     private void errorOp(int line, String operacao) {
-        System.out.println(line + " :" +
-                "error: operação inválida para 'literal' " + operacao + "' '");
+        System.out.println(
+                "\033[1;31mError\033[0m na linha" +
+                        line + " :operação inválida para 'literal' "
+                        + operacao + "' '");
+        System.exit(0);
+
     }
 
     // apenas a concatenação {+} é permitida
@@ -104,22 +108,23 @@ public class Semantico {
                 errorId(line);
             } else {
                 currentType = table.get(token).toString();
-                System.out.println("\n" + currentType);
             }
         }
     }
 
     /* Operações para a expressões */
     private void errorLog(int line, String type, String expectedType, String sendType) {
-        System.out.println(line + " :" +
-                " .Error: tipo " + type + " incompatível." +
-                " Esperado: " + expectedType +
-                " Recebido: " + sendType);
+        System.out.println(
+                "\033[1;31mError\033[0m na linha" +
+                        line + " :tipo " + type + " incompatível." +
+                        " Esperado: " + expectedType +
+                        " Recebido: " + sendType);
+        System.exit(0);
+
     }
 
     public void setExprType(Token token, int line) {
         if (checkId(token, line)) {
-            System.out.println(token.tag + " " + table.get(token));
             if (currentExpression == Tag.VOID) {
                 if (table.get(token).toString().equals("INTEGER")) {
                     currentExpression = Tag.INT;
@@ -128,16 +133,12 @@ public class Semantico {
                 } else {
                     currentExpression = Tag.STRING;
                 }
-                System.out.println("Current expression atribution : " + currentExpression + " " + line);
             }
         }
     }
 
     public void checkExprType(Token token, int line) {
         if (currentExpression != Tag.VOID) {
-            System.out.println(currentExpression + " " + token.tag);
-            System.out.println("Type in expr = " + currentExpression);
-
             if (token.tag == Tag.NUM) {
                 if (token.getType().equals("int")) {
                     if (currentExpression != Tag.INT)
@@ -150,7 +151,6 @@ public class Semantico {
                 if (currentExpression != Tag.STRING)
                     errorLog(line, token.toString(), currentExpression.toString(), "LITERAL");
             } else if (token.tag == Tag.ID && checkId(token, line)) {
-                System.out.println(table.get(token));
                 if (table.get(token).toString().equals("INTEGER")) {
                     if (currentExpression != Tag.INT)
                         errorLog(line, token.toString(), currentExpression.toString(), "INTEGER");
@@ -158,14 +158,11 @@ public class Semantico {
                     if (currentExpression != Tag.FLOAT)
                         errorLog(line, token.toString(), currentExpression.toString(), "FLOAT");
                 } else {
-                    System.out.println("estou aqui");
                     if (currentExpression != Tag.STRING)
                         errorLog(line, token.toString(), currentExpression.toString(), "LITERAL");
                 }
             }
-
         }
-
     }
 
     public void resertType() {
