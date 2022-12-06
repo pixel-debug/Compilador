@@ -399,6 +399,7 @@ public class Parser {
         if (
           token.tag == Tag.MUL || token.tag == Tag.DIV || token.tag == Tag.AND
         ) {
+          
           mulop();
           semantico.checkExprType(token, lexico.line);
           factorA();
@@ -428,6 +429,7 @@ public class Parser {
       case NUM:
       case LIT:
         semantico.setExprType(token, lexico.line);
+        semantico.checkExprType(token, lexico.line);
         factor();
         break;
       default:

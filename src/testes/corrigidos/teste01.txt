@@ -7,7 +7,7 @@ start
 	x = 1.9;
 	scan (b);
 	scan (a);
-	total = (a*b + 1) / 2;
+	total = (b*x + 1) / 2;
 	print ({Resultado: });
 	print (result);
 	print ({Total: });

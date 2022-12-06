@@ -105,6 +105,7 @@ public class Semantico {
         }
         else{
             if(token.tag == Tag.DIV && currentExpression != Tag.FLOAT){
+                System.out.println(" "+ currentExpression);
                 errorDiv(line);
             }
         }
