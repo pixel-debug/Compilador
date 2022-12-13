@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 import lexico.*;
 import sintatico.*;
 import tabsimbolos.TabelaDeSimbolos;
+import gerador_de_codigo.Gerador;
 
 public class App {
 
@@ -14,6 +15,7 @@ public class App {
     Lexico lexer;
     Parser parser;
     boolean boo;
+    Gerador gerador;
     try {
       JFileChooser chooser = new JFileChooser();
       int retorno = chooser.showOpenDialog(null);
@@ -22,7 +24,10 @@ public class App {
         symbols = new TabelaDeSimbolos();
         lexer = new Lexico(chooser.getSelectedFile().toString(), symbols);
         parser = new Parser(lexer);
-        parser.program();
+        //parser.program();
+        gerador = new Gerador(lexer);          
+        gerador.comeco();
+
         symbols.setTable(parser.getSemantico().getTable());
 
         // for para percorrer o arquivo
@@ -35,9 +40,9 @@ public class App {
           //else System.out.println(
           //"Analisador Lexico: Token invalido na linha " + lexer.getLine()
           //);
+
         }
         // System.out.println("Total de linhas: " + lexer.getLine());
-
         System.out.println("\n\nTabela de símbolos:");
         System.out.println(symbols.toString());
       }
