@@ -16,7 +16,7 @@ public class Gerador {
 
     private Lexico lexico;
     private int linha;
-    private int destino;
+    private String destino;
 
     public Gerador(Lexico lexico) {
         codigo = "";
@@ -78,34 +78,40 @@ public class Gerador {
             default:
                 break;
         }
-        
     }
 
     private void assign() throws Exception {
         System.out.println("ASSIGN");
+        System.out.println("entrou no assign = " + token);
+        variavel = token.toString();
         token = lexico.scan(); // come o PPV
-        codigo += "\tlw \t\t" + variavel + " " + token + "\n";
+        variavel2 = lexico.scan().toString();
+        codigo += "\tlw \t\t" + variavel + " " + variavel2 + "\n";
     }
 
     private void se() throws Exception {
+        codigo += "\n";
         System.out.println("\nIF");
         token = lexico.scan(); // come o if
         token = lexico.scan(); // come o (
         System.out.println(token);
         condicao();
-        System.out.println(token);
-        token = lexico.scan(); // come o )
+        System.out.println("final do if = "+token);
+        token = lexico.scan();
 
         while (token.tag == Tag.ID || token.tag == Tag.PRINT ||
                 token.tag == Tag.SCAN || token.tag == Tag.DO || token.tag == Tag.IF) {
             stmt();
+            token = lexico.scan();
+
         }
+        System.out.println("depois do then= "+token);
         token = lexico.scan();
+        System.out.println(token);
         if (token.tag == Tag.ELSE) {
-            codigo += "jump \n";
+            codigo += "\tjump \n";
             token = lexico.scan();
             stmt();
-
         }
 
     }
@@ -133,37 +139,39 @@ public class Gerador {
 
     private void condicao() throws Exception {
         System.out.println("Condicao = " + token);
+        variavel2 = token.toString();
         simpleExpr();
-        System.out.println("var ="+variavel2);
+        
         switch (token.tag) {
             case EQ:
                 variavel = lexico.scan().toString();
-                codigo += "\t\tbeq \t" + variavel2 + " " + variavel + "\n";
+                codigo += "\tcmp \t" + variavel + " " + variavel2 + "\n";
+                codigo += "\tje "+destino +"\n";
                 break;
             case GE:
                 variavel = lexico.scan().toString();
-                codigo += "\t\tslt " + "\tt1 " + " " + variavel2 + " " + variavel + "\n";
-                codigo += "\t\tbeq " + "\tt1 $zero" + "\n";
+                codigo += "\tcmp " + "\tt1 " + " " + variavel + " " + variavel2 + "\n";
+                codigo += "\tjge "+destino +"\n";
                 break;
             case GT:
                 variavel = lexico.scan().toString();
-                codigo += "\t\tslt " + "\tt1 " + " " + variavel2 + " " + variavel + "\n";
-                codigo += "\t\tbne " + "\tt1 $zero" + "\n";
+                codigo += "\tcmp " + "\tt1 " + " " + variavel + " " + variavel2 + "\n";
+                codigo += "\tjg "+destino +"\n";
                 break;
             case NE:
                 variavel = lexico.scan().toString();
-                codigo += "greater " + variavel2 + " " + variavel + "\n";
-                codigo += "je " + "\n";
+                codigo += "\tcmp " + variavel + " " + variavel2 + "\n";
+                codigo += "\tjne "+destino +"\n";
                 break;
             case LT:
                 variavel = lexico.scan().toString();
-                codigo += "\t\tslt " + "\tt1 " + " " + variavel + " " + variavel2 + "\n";
-                codigo += "\t\tbne " + "\tt1 $zero" + "\n";
+                codigo += "\tcmp " + "\tt1 " + " " + variavel + " " + variavel2 + "\n";
+                codigo += "\tjl "+destino +"\n";
                 break;
             case LE:
                 variavel = lexico.scan().toString();
-                codigo += "\t\tslt " + "\tt1 " + " " + variavel + " " + variavel2 + "\n";
-                codigo += "\t\tbeq " + "\tt1 $zero" + "\n";
+                codigo += "\tcmp " + "\tt1 " + " " + variavel + " " + variavel2 + "\n";
+                codigo += "\tjle "+destino +"\n";
                 break;
             default:
                 break;
@@ -178,24 +186,22 @@ public class Gerador {
         System.out.println("nada aqui");
 
     }
-
+    // o scan tá OK
     private void le() throws Exception {
         System.out.println("\nSCAN");
         token = lexico.scan(); // come o scan
         token = lexico.scan(); // come o (
-        System.out.println("token do scan " + token);
         variavel = token.toString();
+        codigo += "scan\n";
         if (token.tag == Tag.LIT) {
             codigo += "\tpush \t\t" + variavel + "\n";
-            codigo += "\tcall scan\n";
+            codigo += "\tcall \t\tscan\n";
         } else {
             codigo += "\tatoi \t\t" + variavel + "\n";
-            codigo += "\tcall scan\n";
+            codigo += "\tcall \t\tscan\n";
         }
         token = lexico.scan(); // come o )
         token = lexico.scan(); // come o pv
-
-        System.out.println("ultimo token do scan = " + token);
     }
 
     // o print ta OK
@@ -203,42 +209,47 @@ public class Gerador {
         System.out.println("\nPRINT");
         token = lexico.scan(); // come o print
         token = lexico.scan(); // come o (
-        System.out.println("token do print = " + token);
+
         variavel = token.toString();
         simpleExpr();
-
-        System.out.println("variavel do print = " + variavel);
-
-        codigo += "\tprint \t\t" + variavel + "\n";
+        codigo += "print \t\t\t" + variavel + "\n";
         token = lexico.scan(); // come a variavel
-
-        System.out.println("ultimo token do print = " + token);
     }
 
     private void simpleExpr() throws Exception {
         System.out.println("token que entrou no simpl = " + token);
         factor();
-        if (token.tag == Tag.SUM) {
-            variavel = lexico.scan().toString();// come o +
-            if (token.tag != Tag.STRING)
-                codigo += "add " + "t0 " + " " + token + " " + variavel + "\n";
-            else
-                codigo += "concat " + "t0 " + " " + token + " " + variavel + "\n";
-        } else if (token.tag == Tag.MIN) {// come o -
-            variavel = lexico.scan().toString();
-            codigo += "sub " + "t0 " + " " + token + " " + variavel + "\n";
-        } else if (token.tag == Tag.OR) {
-            variavel = lexico.scan().toString(); // come o OR
-            codigo += "or " + "t0 " + " " + token + " " + variavel + "\n";
-        } else if (token.tag == Tag.AND) {
-            variavel = lexico.scan().toString();// come o AND
-            codigo += "and " + "t0 " + " " + token + " " + variavel + "\n";
-        } else if (token.tag == Tag.MUL) {
-            variavel = lexico.scan().toString();// come o MUL
-            codigo += "mul " + "t0 " + " " + token + " " + variavel + "\n";
-        } else if (token.tag == Tag.DIV) {
-            variavel = lexico.scan().toString();// come o DIV
-            codigo += "div " + "t0 " + " " + token + " " + variavel + "\n";
+             
+        switch(token.tag){
+            case SUM:
+                variavel = lexico.scan().toString();// come o +
+                if (token.tag != Tag.STRING)
+                    codigo += "\tadd " + "\tt0 " + " " + variavel2 + " " + variavel + "\n";
+                else
+                    codigo += "\tconcat " + "\tt0 " + " " + variavel2 + " " + variavel + "\n";
+                break;
+            case MIN:
+                variavel = lexico.scan().toString();
+                codigo += "\tsub " + "\tt0 " + " " + variavel2 + " " + variavel + "\n";
+                break;  
+            case OR:
+                token = lexico.scan(); // come o OR
+                codigo += "\tor \n";
+                break;
+            case AND:
+                token = lexico.scan();
+                codigo += "\tand \n";
+                break;
+            case MUL:
+                variavel = lexico.scan().toString();// come o MUL
+                codigo += "\tmul " + "\tt0 " + " " + variavel2 + " " + variavel + "\n";
+                break;
+            case DIV:
+                variavel = lexico.scan().toString();// come o DIV
+                codigo += "\tdiv " + "\tt0 " + " " + variavel2 + " " + variavel + "\n";
+                break;
+            default:
+                break;
         }
         factor();
     }
@@ -246,26 +257,14 @@ public class Gerador {
     private void factor()throws Exception {
         switch(token.tag){
             case ID:
-                variavel2 = token.toString();
-
-                codigo += "\tpushin " +token.toString() + "\n";
-                token = lexico.scan();
-                break;
             case NUM:
-                variavel2 = token.toString();
-
-                codigo += "\tpushin " +token.toString() + "\n";
-                token = lexico.scan();
-                break;
             case LIT:
                 variavel2 = token.toString();
-
-                codigo += "\tpushin " +token.toString() + "\n";
                 token = lexico.scan();
                 break;
             case AP:
                 token = lexico.scan();
-                expressao();
+                condicao();
                 token = lexico.scan();
             default:
                 break;
