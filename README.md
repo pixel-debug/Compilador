@@ -1,6 +1,6 @@
 # Compilador
 
-Compilador é um processador de linguagens. Um programa que traduz um programa escrito em uma linguagem (linguagem fonte) e gera um programa equivalente escrito em outra linguagem (linguagem alvo ou linguagem objeto). <br /> <br />
+Compilador é um processador de linguagens. Um programa que traduz um programa escrito em uma linguagem (linguagem fonte) e gera um programa equivalente escrito em outra linguagem (linguagem alvo ou linguagem objeto). <br /> 
 
 Suas funcionalidades são divididas em duas etapas: análise e síntese. <br />
 
@@ -43,7 +43,7 @@ Sua atividade principal realizada pelo analisador semântico é a verificação 
 ## Geração de Código Intermediário
 É uma representação intermediária (código intermediário) de baixo nível pode ser gerada pelo compilador a fim de facilitar a tradução para a linguagem alvo. <br />
 
--> Exemplo de representação intermediária: código de três endereços. <br />
+Exemplo de representação intermediária: código de três endereços. <br />
 > * Sequência de instruções do tipo assembly <br />
 > * Cada instrução possui até três operandos <br />
 > * Cada instrução de atribuição possui no máximo um operador do lado direito <br />
@@ -59,3 +59,6 @@ Alunos: <br />
 Bruna Gomes <br />
 Diego Simões <br />
 Marina Bernardes <br />
+
+#### [o gerador de código está em construção] <br />
+
