@@ -1,8 +1,14 @@
-# Compilador
+Compilador
+======
+</br>
+
+</br>
 
 Compilador é um processador de linguagens. Um programa que traduz um programa escrito em uma linguagem (linguagem fonte) e gera um programa equivalente escrito em outra linguagem (linguagem alvo ou linguagem objeto). <br /> 
 
 Suas funcionalidades são divididas em duas etapas: análise e síntese. <br />
+
+</br>
 
 Análise <br />
 > * Também denominada de front-end do compilador. <br />
@@ -11,13 +17,19 @@ Análise <br />
 > * Na presença de uma não conformidade com as especificações da linguagem fonte, o compilador apresenta mensagem esclarecedora do erro. <br />
 > * O compilador armazena informações sobre o programa fonte em uma estrutura denominada tabela de símbolos. <br />
 
+</br>
+
 Síntese <br />
 > * Também denominada de back-end do compilador. <br />
 > * O compilador constroi o programa objeto com base na representação intermediária (código intermediário) e nas informações da tabela de símbolos. <br />
 > * Alguns compiladores podem realizar também otimizações nos código gerados <br />
 
-## Análise Léxica
+</br>
 
+</br>
+
+Análise Léxica
+------
 * A primeira fase do compilador é a análise léxica ou leitura (scanning). <br />
 * O analisador léxico lê o arquivo do programa fonte, caractere a caractere, e os agrupa em sequências significativas denominadas lexemas. <br />
 * Para cada lexema obtido do código fonte, o analisado léxico gera um token no formato abaixo. Esse token é passado para o analisador sintático. <br />
@@ -28,19 +40,30 @@ Nela, também foi implementada a tabela de símbolos, uma estrutura de dados na 
 
 A estrutura deve ser projetada de forma a permitir que o compilador armazene e recupere rapidamente dados de nomes encontrados no programa fonte. <br />
 
-## Análise Sintática
+</br>
 
+</br>
+
+Análise Sintática
+------
 A segunda fase do compilador é a análise sintática. Ele recebe como entrada os tokens identificados pelo analisador léxico e cria uma representação da estrutura gramatical da sequência de tokens. <br />
 > * A representação utilizada pelo analisador sintático é uma árvore sintática. <br />
 > * O analisador sintático verifica se a ordem em que os tokens aparecem no código fonte está de acordo com a sintaxe da linguagem. <br />
 
-## Análise Semântica
+</br>
+</br>
 
+Análise Semântica
+------
 A terceira fase do compilador. O analisador semântico utiliza a tabela de símbolos e a árvore sintática gerada pelo analisador sintático para verificar se o programa está semanticamente de acordo com as especificações da linguagem fonte. <br />
 
 Sua atividade principal realizada pelo analisador semântico é a verificação de tipos: consiste em verificar se cada operador possui operandos compatíveis <br />
 
-## Geração de Código Intermediário
+</br>
+</br>
+
+Geração de Código Intermediário[^1]
+------
 É uma representação intermediária (código intermediário) de baixo nível pode ser gerada pelo compilador a fim de facilitar a tradução para a linguagem alvo. <br />
 
 Exemplo de representação intermediária: código de três endereços. <br />
@@ -49,16 +72,25 @@ Exemplo de representação intermediária: código de três endereços. <br />
 > * Cada instrução de atribuição possui no máximo um operador do lado direito <br />
 > * O compilador precisa gerar um nome temporário para guardar o valor computado <br />
 
+</br>
+</br>
+</br>
 
-### Execução
+Execução
+------
 Para a execução do arquivo utilize o codigo no terminal:
 
-```* java -jar /ArquivoJAR/Compilador.java```
+```
+  * java -jar /ArquivoJAR/Compilador.java
+```
+</br>
 
+Envolvidos:
+------
 Alunos: <br />
 Bruna Gomes <br />
 Diego Simões <br />
 Marina Bernardes <br />
 
-#### [o gerador de código está em construção] <br />
+[^1]: O gerador de código está em construção <br />
 
